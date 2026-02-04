@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 struct studentas{
     std::string vardas, pavarde;
@@ -38,17 +39,26 @@ int main() {
         std::cout << "Iveskite " << i + 1 << " studento varda ir pavarde: ";
         std::cin >> A[i].vardas >> A[i].pavarde;
         
-        std::cout << "Iveskite " << i + 1 << " studento namu darbu ivertinimus";
+        std::cout << "Iveskite " << i + 1 << " studento namu darbu ivertinimus" << std::endl;
         A[i].nd = new int[nd_kiekis];
         for(int j = 0; j < nd_kiekis; j++)
         {
+            std::cout << "Iveskite " << j + 1 << " ivertinima:"<< std::endl;
             std::cin >> A[i].nd[j];
-            std::cout << "Iveskite dar: " << std::endl;
         }
 
         std::cout << "Iveskite " << i + 1 << " studento egzamino rezultata" << std::endl;
         std::cin >> A[i].egzaminas;
 
+    }
+
+    std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde" << std::setw(15) << "Galutinis (Vid.)" << std::endl;
+    std::cout << "------------------------------------------" << std::endl;
+
+    for(int i = 0; i < skaicius; i++)
+    {
+        double galutinis = 0.4 * vidurkis(A[i], nd_kiekis) + 0.6 * A[i].egzaminas;
+        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(10) << A[i].pavarde << std::setw(15) << std::fixed << std::setprecision(2) << galutinis << std::endl;
     }
 
 
