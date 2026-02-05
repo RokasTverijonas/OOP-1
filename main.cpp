@@ -30,14 +30,18 @@ double mediana(studentas A,int n)
     }
     std::sort(temp, temp + n);
 
+    double rez;
     if(n % 2 != 0)
     {
-        return temp[n / 2];
+        rez = temp[n / 2];
     }
     else
     {
-        return (temp[n / 2] + temp[(n - 1) / 2]) / 2.0;
+        rez = (temp[n / 2] + temp[(n - 1) / 2]) / 2.0;
     }
+    delete[] temp;
+    return rez;
+
 }
 
 int main() {
@@ -50,6 +54,16 @@ int main() {
 
     std::cout << "Iveskite namu darbu kieki: " << std::endl;
     std::cin >> nd_kiekis;
+
+    char pasirinkimas;
+
+    std::cout << "Skaiciuoti galutini bala pagal namu darbu vidurki (v) ar mediana (m)? ";
+    std::cin >> pasirinkimas;
+    while(pasirinkimas != 'v' && pasirinkimas != 'm')
+    {
+        std::cout << "Ivedete neteisingai, iveskite (v) arba (m): ";
+        std::cin >> pasirinkimas;
+    }
 
     studentas* A = new studentas[skaicius];
 
@@ -72,13 +86,32 @@ int main() {
 
     }
 
-    std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde" << std::setw(15) << "Galutinis (Vid.)" << std::endl;
+    std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde";
+    
+    if(pasirinkimas == 'm')
+    {
+        std::cout << std::setw(20) << "Galutinis (Med.)" << std::endl;
+    }
+    else
+    {
+        std::cout << std::setw(20) << "Galutinis (Vid.)" << std::endl;
+    }
+    
     std::cout << "------------------------------------------" << std::endl;
 
     for(int i = 0; i < skaicius; i++)
     {
-        double galutinis = 0.4 * vidurkis(A[i], nd_kiekis) + 0.6 * A[i].egzaminas;
-        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(10) << A[i].pavarde << std::setw(15) << std::fixed << std::setprecision(2) << galutinis << std::endl;
+        double nd_rez;
+        if(pasirinkimas == 'm')
+        {
+            nd_rez = mediana(A[i], nd_kiekis);
+        }
+        else
+        {
+            nd_rez = vidurkis(A[i], nd_kiekis);
+        }
+        double galutinis = 0.4 * nd_rez + 0.6 * A[i].egzaminas;
+        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(10) << A[i].pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis << std::endl;
     }
 
 
