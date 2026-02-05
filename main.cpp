@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <algorithm>
 
 struct studentas{
     std::string vardas, pavarde;
@@ -18,6 +19,25 @@ double vidurkis(studentas A, int n)
     double vidurkis = suma / n;
 
     return vidurkis;
+}
+
+double mediana(studentas A,int n)
+{
+    int* temp = new int[n];
+    for(int i = 0; i < n; i++)
+    {
+        temp[i] = A.nd[i];
+    }
+    std::sort(temp, temp + n);
+
+    if(n % 2 != 0)
+    {
+        return temp[n / 2];
+    }
+    else
+    {
+        return (temp[n / 2] + temp[(n - 1) / 2]) / 2.0;
+    }
 }
 
 int main() {
