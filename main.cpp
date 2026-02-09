@@ -11,6 +11,10 @@ struct studentas{
 
 double vidurkis(studentas A, int n)
 {
+    if(n == 0)
+    {
+        return 0.0;
+    }
     double suma = 0;
     for(int i = 0; i < n; i++)
     {
@@ -23,6 +27,10 @@ double vidurkis(studentas A, int n)
 
 double mediana(studentas A,int n)
 {
+    if(n == 0)
+    {
+        return 0.0;
+    }
     int* temp = new int[n];
     for(int i = 0; i < n; i++)
     {
@@ -49,16 +57,38 @@ int main() {
     int skaicius;
     int nd_kiekis;
 
-    std::cout << "Iveskite studentu skaiciu: " << std::endl;
-    std::cin >> skaicius;
+    while(true) 
+    {
+        std::cout << "Iveskite studentu skaiciu: " << std::endl;
+        std::cin >> skaicius;
+        if(!std::cin.fail() && skaicius > 0)
+        {
+            break;
+        }
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+        std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+    }
 
-    std::cout << "Iveskite namu darbu kieki: " << std::endl;
-    std::cin >> nd_kiekis;
+    while(true)
+    {
+        std::cout << "Iveskite namu darbu kieki: " << std::endl;
+        std::cin >> nd_kiekis;
+        if(!std::cin.fail() && nd_kiekis >= 0)
+        {
+            break;
+        }
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+        std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+    }
+    
 
     char pasirinkimas;
 
     std::cout << "Skaiciuoti galutini bala pagal namu darbu vidurki (v) ar mediana (m)? ";
     std::cin >> pasirinkimas;
+    pasirinkimas = std::tolower(pasirinkimas);
     while(pasirinkimas != 'v' && pasirinkimas != 'm')
     {
         std::cout << "Ivedete neteisingai, iveskite (v) arba (m): ";
@@ -77,12 +107,33 @@ int main() {
         A[i].nd = new int[nd_kiekis];
         for(int j = 0; j < nd_kiekis; j++)
         {
-            std::cout << "Iveskite " << j + 1 << " ivertinima:"<< std::endl;
-            std::cin >> A[i].nd[j];
+            while(true)
+            {
+                std::cout << "Iveskite " << j + 1 << " ivertinima:"<< std::endl;
+                std::cin >> A[i].nd[j];
+                if(!std::cin.fail() && A[i].nd[j] >= 0 && A[i].nd[j] <= 10)
+                {
+                    break;
+                }
+                std::cin.clear();
+                std::cin.ignore(10000,'\n');
+                std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+            }
         }
 
-        std::cout << "Iveskite " << i + 1 << " studento egzamino rezultata" << std::endl;
-        std::cin >> A[i].egzaminas;
+        while(true)
+        {
+            std::cout << "Iveskite " << i + 1 << " studento egzamino rezultata" << std::endl;
+            std::cin >> A[i].egzaminas;
+            if(!std::cin.fail() && A[i].egzaminas >= 0)
+            {
+                break;
+            }
+            std::cin.clear();
+            std::cin.ignore(10000,'\n');
+            std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+
+        }
 
     }
 
