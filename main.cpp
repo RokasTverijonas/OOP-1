@@ -52,6 +52,13 @@ double mediana(studentas A,int n)
 
 }
 
+double galutinis(studentas A, double balai)
+{
+    double galutinis = 0.4 * balai + 0.6 * A.egzaminas;
+    return galutinis;
+
+}
+
 int main() {
 
     int skaicius;
@@ -161,8 +168,8 @@ int main() {
         {
             nd_rez = vidurkis(A[i], nd_kiekis);
         }
-        double galutinis = 0.4 * nd_rez + 0.6 * A[i].egzaminas;
-        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(10) << A[i].pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis << std::endl;
+        double galutinis_rez = galutinis(A[i], nd_rez);
+        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(10) << A[i].pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
     }
 
 
