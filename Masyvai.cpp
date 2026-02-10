@@ -6,6 +6,7 @@
 struct studentas{
     std::string vardas, pavarde;
     int* nd;
+    int kiekis;
     int egzaminas;
 };
 
@@ -61,87 +62,73 @@ double galutinis(studentas A, double balai)
 
 int main() {
 
-    int skaicius;
-    int nd_kiekis;
-
-    while(true) 
-    {
-        std::cout << "Iveskite studentu skaiciu: " << std::endl;
-        std::cin >> skaicius;
-        if(!std::cin.fail() && skaicius > 0)
-        {
-            break;
-        }
-        std::cin.clear();
-        std::cin.ignore(10000, '\n');
-        std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
-    }
+    char pasirinkimas;
+    studentas* A = nullptr;
+    int m = 0;
 
     while(true)
     {
-        std::cout << "Iveskite namu darbu kieki: " << std::endl;
-        std::cin >> nd_kiekis;
-        if(!std::cin.fail() && nd_kiekis >= 0)
+        std:: string vardas;
+        std::cout << "Iveskite " << m + 1 << " studento varda ('pabaiga' - baigia ivedinejima): " << std::endl;
+        std::cin >> vardas;
+        if(vardas == "pabaiga")
         {
             break;
         }
-        std::cin.clear();
-        std::cin.ignore(10000, '\n');
-        std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
-    }
-    
 
-    char pasirinkimas;
+        std::string pavarde;
+        std::cout << "Iveskite studento pavarde: " << std::endl;
+        std::cin >> pavarde;
 
-    std::cout << "Skaiciuoti galutini bala pagal namu darbu vidurki (v) ar mediana (m)? ";
-    std::cin >> pasirinkimas;
-    pasirinkimas = std::tolower(pasirinkimas);
-    while(pasirinkimas != 'v' && pasirinkimas != 'm')
-    {
-        std::cout << "Ivedete neteisingai, iveskite (v) arba (m): ";
-        std::cin >> pasirinkimas;
-    }
-
-    studentas* A = new studentas[skaicius];
-
-
-    for(int i = 0; i < skaicius; i++)
-    {
-        std::cout << "Iveskite " << i + 1 << " studento varda ir pavarde: ";
-        std::cin >> A[i].vardas >> A[i].pavarde;
-        
-        std::cout << "Iveskite " << i + 1 << " studento namu darbu ivertinimus" << std::endl;
-        A[i].nd = new int[nd_kiekis];
-        for(int j = 0; j < nd_kiekis; j++)
+        studentas* temp = new studentas[m + 1];
+        for(int i = 0;i < m; i++)
         {
-            while(true)
-            {
-                std::cout << "Iveskite " << j + 1 << " ivertinima:"<< std::endl;
-                std::cin >> A[i].nd[j];
-                if(!std::cin.fail() && A[i].nd[j] >= 0 && A[i].nd[j] <= 10)
-                {
-                    break;
-                }
-                std::cin.clear();
-                std::cin.ignore(10000,'\n');
-                std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
-            }
+            temp[i] = A[i];
         }
+        delete[] A;
+        A = temp;
 
+        A[m].vardas = vardas;
+        A[m].pavarde = pavarde;
+
+        int* nd_laikinas = nullptr;
+        int n = 0;
+        
         while(true)
         {
-            std::cout << "Iveskite " << i + 1 << " studento egzamino rezultata" << std::endl;
-            std::cin >> A[i].egzaminas;
-            if(!std::cin.fail() && A[i].egzaminas >= 0)
+            int nd;
+            std::cout << "Iveskite " << n + 1 <<  "namu darbo ivertinima ( 0 - baigti): " << std::endl;
+            std::cin >> nd;
+            if(nd == 0)
             {
                 break;
             }
-            std::cin.clear();
-            std::cin.ignore(10000,'\n');
-            std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
 
+            int* nd_temp = new int[n + 1];
+            
+            for(int j = 0; j < n; j++)
+            {
+                nd_temp[j] = nd_laikinas[j];
+            }
+            delete[] nd_laikinas;
+            nd_laikinas = nd_temp;
+
+            nd_laikinas[n] = nd;
+            n++;
         }
 
+        A[m].kiekis = n;
+        A[m].nd = new int[n];
+        for(int i = 0; i < n; i++)
+        {
+            A[m].nd[i] = nd_laikinas[i];
+        }
+        delete[] nd_laikinas;
+
+        std::cout << "Iveskite " << m + 1 << " studento egzamino rezultata: " << std::endl;
+        std::cin >> A[m].egzaminas;
+
+        m++;
     }
 
     std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde";
@@ -157,23 +144,23 @@ int main() {
     
     std::cout << "------------------------------------------" << std::endl;
 
-    for(int i = 0; i < skaicius; i++)
+    for(int i = 0; i < m; i++)
     {
         double nd_rez;
         if(pasirinkimas == 'm')
         {
-            nd_rez = mediana(A[i], nd_kiekis);
+            nd_rez = mediana(A[i], A[i].kiekis);
         }
         else
         {
-            nd_rez = vidurkis(A[i], nd_kiekis);
+            nd_rez = vidurkis(A[i], A[i].kiekis);
         }
         double galutinis_rez = galutinis(A[i], nd_rez);
         std::cout <<std::setw(10) <<  A[i].vardas << std::setw(10) << A[i].pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
     }
 
 
-    for(int i = 0; i < skaicius; i++)
+    for(int i = 0; i < m; i++)
     {
         delete[] A[i].nd;
     }
