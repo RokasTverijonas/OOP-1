@@ -104,6 +104,14 @@ int main() {
                 break;
             }
 
+            if(std::cin.fail() || nd < 0 || nd > 10)
+            {
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+                continue;
+            }
+
             int* nd_temp = new int[n + 1];
             
             for(int j = 0; j < n; j++)
@@ -128,7 +136,32 @@ int main() {
         std::cout << "Iveskite " << m + 1 << " studento egzamino rezultata: " << std::endl;
         std::cin >> A[m].egzaminas;
 
+         while(true)
+            {
+                std::cout << "Iveskite " << m + 1 << " studento egzamino rezultata: " << std::endl;
+                std::cin >> A[m].egzaminas;
+                if(!std::cin.fail() && A[m].egzaminas >= 0 && A[m].egzaminas <= 10)
+                {
+                    break;
+                }
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+            }
+
         m++;
+    }
+
+    while(true)
+    {
+        std::cout << "Skaiciuoti pagal vidurki (v) ar mediana (m)? " << std::endl;
+        std::cin >> pasirinkimas;
+        pasirinkimas = tolower(pasirinkimas);
+        if(pasirinkimas == 'v' || pasirinkimas == 'm')
+        {
+            break;
+        }
+        std::cout << "Ivedete neteisingai, iveskite (v) arba (m)" << std::endl;
     }
 
     std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde";
