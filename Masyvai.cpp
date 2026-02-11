@@ -2,6 +2,7 @@
 #include <string>
 #include <iomanip>
 #include <algorithm>
+#include <cstdlib>
 
 struct studentas{
     std::string vardas, pavarde;
@@ -60,11 +61,29 @@ double galutinis(studentas A, double balai)
 
 }
 
+int* NDgeneravimas(int n)
+{
+    int* nd = new int[n];
+    for(int i = 0; i < n; i++)
+    {
+        nd[i] = rand() % 11;
+    }
+    return nd;
+}
+
+int EGZgeneravimas()
+{
+    return rand() % 11;
+}
+
+
 int main() {
 
     char pasirinkimas;
     studentas* A = nullptr;
     int m = 0;
+    srand(time(NULL));
+    int auto_kiekis = -1;
 
     while(true)
     {
@@ -93,36 +112,62 @@ int main() {
 
         int* nd_laikinas = nullptr;
         int n = 0;
+
+        char budas;
+        std::cout << "Norite ivesti ivertinimus ranka ar norit, kad automatiskai butu ivedami ivertinimai? (r - ranka / a - automatiskai)" << std::endl;
+        std::cin >> budas;
+        while(budas != 'r' && budas != 'a')
+        {
+            std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+            std::cin >> budas;
+        }
         
         while(true)
         {
-            int nd;
-            std::cout << "Iveskite " << n + 1 <<  "namu darbo ivertinima ( 0 - baigti): " << std::endl;
-            std::cin >> nd;
-            if(nd == 0)
+            if(budas == 'a')
             {
+                if(auto_kiekis == -1)
+                {
+                    std::cout << "Iveskite norima pazymiu kieki: " << std::endl;
+                    std::cin >> auto_kiekis;
+                }
+                nd_laikinas = NDgeneravimas(auto_kiekis);
+                n = auto_kiekis;
                 break;
-            }
 
-            if(std::cin.fail() || nd < 0 || nd > 10)
+            }
+            else if(budas == 'r')
             {
-                std::cin.clear();
-                std::cin.ignore(10000, '\n');
-                std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
-                continue;
-            }
+                int nd;
+                std::cout << "Iveskite " << n + 1 <<  "namu darbo ivertinima ( 0 - baigti): " << std::endl;
+                std::cin >> nd;
+                if(nd == 0)
+                {
+                    break;
+                }
 
-            int* nd_temp = new int[n + 1];
+                if(std::cin.fail() || nd < 0 || nd > 10)
+                {
+                    std::cin.clear();
+                    std::cin.ignore(10000, '\n');
+                    std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+                    continue;
+                }
+
+                int* nd_temp = new int[n + 1];
             
-            for(int j = 0; j < n; j++)
-            {
-                nd_temp[j] = nd_laikinas[j];
-            }
-            delete[] nd_laikinas;
-            nd_laikinas = nd_temp;
+                for(int j = 0; j < n; j++)
+                {
+                    nd_temp[j] = nd_laikinas[j];
+                }
+                delete[] nd_laikinas;
+                nd_laikinas = nd_temp;
 
-            nd_laikinas[n] = nd;
-            n++;
+                nd_laikinas[n] = nd;
+                n++;
+
+            }
+            
         }
 
         A[m].kiekis = n;
@@ -133,11 +178,16 @@ int main() {
         }
         delete[] nd_laikinas;
 
-        std::cout << "Iveskite " << m + 1 << " studento egzamino rezultata: " << std::endl;
-        std::cin >> A[m].egzaminas;
 
          while(true)
             {
+                if(budas == 'a')
+                {
+                    A[m].egzaminas = EGZgeneravimas();
+                    break;
+                }
+                else if(budas == 'r')
+                {
                 std::cout << "Iveskite " << m + 1 << " studento egzamino rezultata: " << std::endl;
                 std::cin >> A[m].egzaminas;
                 if(!std::cin.fail() && A[m].egzaminas >= 0 && A[m].egzaminas <= 10)
@@ -147,6 +197,7 @@ int main() {
                 std::cin.clear();
                 std::cin.ignore(10000, '\n');
                 std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+                }
             }
 
         m++;
@@ -189,7 +240,7 @@ int main() {
             nd_rez = vidurkis(A[i], A[i].kiekis);
         }
         double galutinis_rez = galutinis(A[i], nd_rez);
-        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(10) << A[i].pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
+        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(15)<< A[i].pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
     }
 
 
