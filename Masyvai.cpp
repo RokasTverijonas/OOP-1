@@ -4,6 +4,9 @@
 #include <algorithm>
 #include <cstdlib>
 
+const std::string vardai[10] = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
+const std::string pavardes[10] = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
+
 struct studentas{
     std::string vardas, pavarde;
     int* nd;
