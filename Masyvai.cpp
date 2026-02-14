@@ -76,6 +76,37 @@ int EGZgeneravimas()
     return rand() % 11;
 }
 
+void spausdinimas(studentas* A, int m, char pasirinkimas)
+{
+    std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde";
+    
+    if(pasirinkimas == 'm')
+    {
+        std::cout << std::setw(20) << "Galutinis (Med.)" << std::endl;
+    }
+    else
+    {
+        std::cout << std::setw(20) << "Galutinis (Vid.)" << std::endl;
+    }
+    
+    std::cout << "------------------------------------------" << std::endl;
+
+    for(int i = 0; i < m; i++)
+    {
+        double nd_rez;
+        if(pasirinkimas == 'm')
+        {
+            nd_rez = mediana(A[i], A[i].kiekis);
+        }
+        else
+        {
+            nd_rez = vidurkis(A[i], A[i].kiekis);
+        }
+        double galutinis_rez = galutinis(A[i], nd_rez);
+        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(15)<< A[i].pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
+    } 
+}
+
 
 int main() {
 
@@ -139,7 +170,7 @@ int main() {
             else if(budas == 'r')
             {
                 int nd;
-                std::cout << "Iveskite " << n + 1 <<  "namu darbo ivertinima ( 0 - baigti): " << std::endl;
+                std::cout << "Iveskite " << m + 1 << " studento " << n + 1 <<  " namu darbo ivertinima ( 0 - baigti): " << std::endl;
                 std::cin >> nd;
                 if(nd == 0)
                 {
@@ -215,33 +246,8 @@ int main() {
         std::cout << "Ivedete neteisingai, iveskite (v) arba (m)" << std::endl;
     }
 
-    std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde";
-    
-    if(pasirinkimas == 'm')
-    {
-        std::cout << std::setw(20) << "Galutinis (Med.)" << std::endl;
-    }
-    else
-    {
-        std::cout << std::setw(20) << "Galutinis (Vid.)" << std::endl;
-    }
-    
-    std::cout << "------------------------------------------" << std::endl;
+    spausdinimas(A, m, pasirinkimas);
 
-    for(int i = 0; i < m; i++)
-    {
-        double nd_rez;
-        if(pasirinkimas == 'm')
-        {
-            nd_rez = mediana(A[i], A[i].kiekis);
-        }
-        else
-        {
-            nd_rez = vidurkis(A[i], A[i].kiekis);
-        }
-        double galutinis_rez = galutinis(A[i], nd_rez);
-        std::cout <<std::setw(10) <<  A[i].vardas << std::setw(15)<< A[i].pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
-    }
 
 
     for(int i = 0; i < m; i++)
