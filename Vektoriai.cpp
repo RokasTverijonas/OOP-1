@@ -1,0 +1,241 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <algorithm>
+#include <cstdlib>
+#include <cctype>
+#include <vector>
+
+const std::string vardai[10] = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
+const std::string pavardes[10] = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
+
+struct studentas{
+    std::string vardas, pavarde;
+    std::vector<int> nd;
+    int egzaminas;
+};
+
+double vidurkis(studentas& A)
+{
+    if(A.nd.empty())
+    {
+        return 0.0;
+    }
+    double suma = 0;
+    for(int i = 0; i < A.nd.size(); i++)
+    {
+        suma += A.nd[i];
+    }
+    double vidurkis = suma / A.nd.size();
+
+    return vidurkis;
+}
+
+double mediana(studentas& A)
+{
+    if(A.nd.empty())
+    {
+        return 0.0;
+    }
+    std::vector<int> temp = A.nd;
+    std::sort(temp.begin(), temp.end());
+
+    int n = temp.size(); 
+
+    double rez;
+    if(n % 2 != 0)
+    {
+        rez = temp[n / 2];
+    }
+    else
+    {
+        rez = (temp[n / 2] + temp[(n - 1) / 2]) / 2.0;
+    }
+    return rez;
+
+}
+
+double galutinis(studentas& A, double balai)
+{
+    return 0.4 * balai + 0.6 * A.egzaminas;
+}
+
+void spausdinimas(std::vector<studentas>& A, char pasirinkimas)
+{
+    std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde";
+    
+    if(pasirinkimas == 'm')
+    {
+        std::cout << std::setw(20) << "Galutinis (Med.)" << std::endl;
+    }
+    else
+    {
+        std::cout << std::setw(20) << "Galutinis (Vid.)" << std::endl;
+    }
+    
+    std::cout << "------------------------------------------" << std::endl;
+
+    for(auto s : A)
+    {
+        double nd_rez;
+        if(pasirinkimas == 'm')
+        {
+            nd_rez = mediana(s);
+        }
+        else
+        {
+            nd_rez = vidurkis(s);
+        }
+        double galutinis_rez = galutinis(s, nd_rez);
+        std::cout <<std::setw(10) <<  s.vardas << std::setw(15)<< s.pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
+    } 
+}
+
+
+int main() {
+
+    //char pasirinkimas;
+    std::vector<studentas> A;
+    srand(time(NULL));
+    int auto_kiekis = -1;
+    bool run = true;
+
+    while(run)
+    {
+        std::cout << "Pasirinkimų meniu: " << std::endl;
+        std::cout << "1 - Ivesti ranka; " << std::endl;
+        std::cout << "2 - Generuoti tik pazymius; " << std::endl;
+        std::cout << "3 - Generuoti studentu vardus, pavardes ir pazymius; " << std::endl;
+        std::cout << "4 - Baigti darbą; " << std::endl;
+        std::cout << " Pasirinkite ";
+        int pasirinkimas;
+        std::cin >> pasirinkimas;
+
+        switch(pasirinkimas)
+        {
+            case 1: //ranka
+            case 2: //auto nd ir egz
+            {
+                while(true)
+                {
+                    studentas s;
+                    std::cout << "Iveskite " << A.size() + 1 << " studento varda ('pabaiga' - baigia ivedinejima): " << std::endl;
+                    std::cin >> s.vardas;
+                    if(s.vardas == "pabaiga")
+                    {
+                        break;
+                    }
+
+                    std::cout << "Iveskite studento pavarde: " << std::endl;
+                    std::cin >> s.pavarde;
+
+                    if(pasirinkimas == 1)
+                    {
+                        while(true)
+                        {
+                            int nd;
+                            std::cout << "Iveskite " << A.size() + 1 << " studento " << s.nd.size() + 1 <<  " namu darbo ivertinima ( 0 - baigti): " << std::endl;
+                            std::cin >> nd;
+                            if(nd == 0)
+                            {
+                                break;
+                            }
+
+                            if(nd < 0 || nd > 10)
+                            {
+                                std::cin.clear();
+                                std::cin.ignore(10000, '\n');
+                                std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+                                continue;
+                            }
+
+                            s.nd.push_back(nd);
+
+                        }
+                    }
+                    else if(pasirinkimas == 2)
+                    {
+                        if(auto_kiekis == -1)
+                        {
+                            std::cout << "Iveskite norima pazymiu kieki: " << std::endl;
+                            std::cin >> auto_kiekis;
+                        }
+                        for(int i = 0; i < auto_kiekis; i++)
+                        {
+                            s.nd.push_back(rand() % 10 + 1);
+                        }
+                    }
+
+                    if(pasirinkimas == 1)
+                    {
+                        while(true)
+                        {
+                        std::cout << "Iveskite " << A.size() + 1 << " studento egzamino rezultata: " << std::endl;
+                        std::cin >> s.egzaminas;
+                        if(s.egzaminas >= 0 && s.egzaminas <= 10)
+                        {
+                            break;
+                        }
+                        std::cin.clear();
+                        std::cin.ignore(10000, '\n');
+                        std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+                        }
+                    }
+                    else if(pasirinkimas == 2)
+                    {
+                        s.egzaminas = rand() % 10 + 1;
+                    }
+                    A.push_back(s);
+
+                }
+                break;
+            }
+            case 3:
+            {
+                int m;
+                int n;
+                std::cout << "Kiek studentu sugeneruoti? " << std::endl;
+                std::cin >> m;
+                for(int i = 0; i < m; i++)
+                {
+                    studentas s;
+                    s.vardas = vardai[rand() % 10];
+                    s.pavarde = pavardes[rand() % 10];
+                    s.egzaminas = rand() % 10 + 1;
+                
+                std::cout << "Kiek pazymiu sugeneruoti? " << std::endl;
+                std::cin >> n;
+                for(int i = 0; i < n; i++)
+                {
+                    s.nd.push_back(rand() % 10 + 1);
+                }
+                A.push_back(s);
+            }
+                break;
+            }
+            case 4:
+            {
+                char budas;
+                while(true)
+                {
+                    std::cout << "Skaiciuoti pagal vidurki (v) ar mediana (m)? " << std::endl;
+                    std::cin >> budas;
+                    if(tolower(budas) == 'v' || tolower(budas) == 'm')
+                    {
+                        break;
+                    }
+                    std::cout << "Ivedete neteisingai, iveskite (v) arba (m)" << std::endl;
+                }
+                spausdinimas(A,budas);
+                run = false;
+                break;
+            }
+            default:
+            {
+                std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+                break;
+            }
+        }
+
+    }
+}
