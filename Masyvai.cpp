@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <cstdlib>
+#include <cctype>
 
 const std::string vardai[10] = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
 const std::string pavardes[10] = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
@@ -14,7 +15,7 @@ struct studentas{
     int egzaminas;
 };
 
-double vidurkis(studentas A, int n)
+double vidurkis(studentas& A, int n)
 {
     if(n == 0)
     {
@@ -30,7 +31,7 @@ double vidurkis(studentas A, int n)
     return vidurkis;
 }
 
-double mediana(studentas A,int n)
+double mediana(studentas& A,int n)
 {
     if(n == 0)
     {
@@ -57,7 +58,7 @@ double mediana(studentas A,int n)
 
 }
 
-double galutinis(studentas A, double balai)
+double galutinis(studentas& A, double balai)
 {
     double galutinis = 0.4 * balai + 0.6 * A.egzaminas;
     return galutinis;
@@ -69,14 +70,14 @@ int* NDgeneravimas(int n)
     int* nd = new int[n];
     for(int i = 0; i < n; i++)
     {
-        nd[i] = rand() % 11;
+        nd[i] = rand() % 10 + 1;
     }
     return nd;
 }
 
 int EGZgeneravimas()
 {
-    return rand() % 11;
+    return rand() % 10 + 1;
 }
 
 void spausdinimas(studentas* A, int m, char pasirinkimas)
@@ -113,150 +114,199 @@ void spausdinimas(studentas* A, int m, char pasirinkimas)
 
 int main() {
 
-    char pasirinkimas;
+    //char pasirinkimas;
     studentas* A = nullptr;
     int m = 0;
     srand(time(NULL));
     int auto_kiekis = -1;
+    bool run = true;
 
-    while(true)
+    while(run)
     {
-        std:: string vardas;
-        std::cout << "Iveskite " << m + 1 << " studento varda ('pabaiga' - baigia ivedinejima): " << std::endl;
-        std::cin >> vardas;
-        if(vardas == "pabaiga")
-        {
-            break;
-        }
-
-        std::string pavarde;
-        std::cout << "Iveskite studento pavarde: " << std::endl;
-        std::cin >> pavarde;
-
-        studentas* temp = new studentas[m + 1];
-        for(int i = 0;i < m; i++)
-        {
-            temp[i] = A[i];
-        }
-        delete[] A;
-        A = temp;
-
-        A[m].vardas = vardas;
-        A[m].pavarde = pavarde;
-
-        int* nd_laikinas = nullptr;
-        int n = 0;
-
-        char budas;
-        std::cout << "Norite ivesti ivertinimus ranka ar norit, kad automatiskai butu ivedami ivertinimai? (r - ranka / a - automatiskai)" << std::endl;
-        std::cin >> budas;
-        while(budas != 'r' && budas != 'a')
-        {
-            std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
-            std::cin >> budas;
-        }
-        
-        while(true)
-        {
-            if(budas == 'a')
-            {
-                if(auto_kiekis == -1)
-                {
-                    std::cout << "Iveskite norima pazymiu kieki: " << std::endl;
-                    std::cin >> auto_kiekis;
-                }
-                nd_laikinas = NDgeneravimas(auto_kiekis);
-                n = auto_kiekis;
-                break;
-
-            }
-            else if(budas == 'r')
-            {
-                int nd;
-                std::cout << "Iveskite " << m + 1 << " studento " << n + 1 <<  " namu darbo ivertinima ( 0 - baigti): " << std::endl;
-                std::cin >> nd;
-                if(nd == 0)
-                {
-                    break;
-                }
-
-                if(std::cin.fail() || nd < 0 || nd > 10)
-                {
-                    std::cin.clear();
-                    std::cin.ignore(10000, '\n');
-                    std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
-                    continue;
-                }
-
-                int* nd_temp = new int[n + 1];
-            
-                for(int j = 0; j < n; j++)
-                {
-                    nd_temp[j] = nd_laikinas[j];
-                }
-                delete[] nd_laikinas;
-                nd_laikinas = nd_temp;
-
-                nd_laikinas[n] = nd;
-                n++;
-
-            }
-            
-        }
-
-        A[m].kiekis = n;
-        A[m].nd = new int[n];
-        for(int i = 0; i < n; i++)
-        {
-            A[m].nd[i] = nd_laikinas[i];
-        }
-        delete[] nd_laikinas;
-
-
-         while(true)
-            {
-                if(budas == 'a')
-                {
-                    A[m].egzaminas = EGZgeneravimas();
-                    break;
-                }
-                else if(budas == 'r')
-                {
-                std::cout << "Iveskite " << m + 1 << " studento egzamino rezultata: " << std::endl;
-                std::cin >> A[m].egzaminas;
-                if(!std::cin.fail() && A[m].egzaminas >= 0 && A[m].egzaminas <= 10)
-                {
-                    break;
-                }
-                std::cin.clear();
-                std::cin.ignore(10000, '\n');
-                std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
-                }
-            }
-
-        m++;
-    }
-
-    while(true)
-    {
-        std::cout << "Skaiciuoti pagal vidurki (v) ar mediana (m)? " << std::endl;
+        std::cout << "Pasirinkimų meniu: " << std::endl;
+        std::cout << "1 - Ivesti ranka; " << std::endl;
+        std::cout << "2 - Generuoti tik pazymius; " << std::endl;
+        std::cout << "3 - Generuoti studentu vardus, pavardes ir pazymius; " << std::endl;
+        std::cout << "4 - Baigti darbą; " << std::endl;
+        std::cout << " Pasirinkite ";
+        int pasirinkimas;
         std::cin >> pasirinkimas;
-        pasirinkimas = tolower(pasirinkimas);
-        if(pasirinkimas == 'v' || pasirinkimas == 'm')
+
+        switch(pasirinkimas)
         {
-            break;
+            case 1: //ranka
+            case 2: //auto nd ir egz
+            {
+                while(true)
+                {
+                    std:: string vardas;
+                    std::cout << "Iveskite " << m + 1 << " studento varda ('pabaiga' - baigia ivedinejima): " << std::endl;
+                    std::cin >> vardas;
+                    if(vardas == "pabaiga")
+                    {
+                        break;
+                    }
+
+                    std::string pavarde;
+                    std::cout << "Iveskite studento pavarde: " << std::endl;
+                    std::cin >> pavarde;
+
+                    studentas* temp = new studentas[m + 1];
+                    for(int i = 0;i < m; i++)
+                    {
+                        temp[i].vardas = A[i].vardas;
+                        temp[i].pavarde = A[i].pavarde;
+                        temp[i].kiekis = A[i].kiekis;
+                        temp[i].egzaminas = A[i].egzaminas;
+
+                        temp[i].nd = new int[A[i].kiekis];
+                        for(int j = 0; j < A[i].kiekis; j++)
+                        {
+                            temp[i].nd[j] = A[i].nd[j];
+                        }
+                    }
+                    for(int i = 0; i < m; i++)
+                    {
+                        delete[] A[i].nd;
+                    }
+                    delete[] A;
+                    
+                    A = temp;
+
+                    A[m].vardas = vardas;
+                    A[m].pavarde = pavarde;
+
+                    int* nd_laikinas = nullptr;
+                    int n = 0;
+
+                    if(pasirinkimas == 1)
+                    {
+                        while(true)
+                        {
+                            int nd;
+                            std::cout << "Iveskite " << m + 1 << " studento " << n + 1 <<  " namu darbo ivertinima ( 0 - baigti): " << std::endl;
+                            std::cin >> nd;
+                            if(nd == 0)
+                            {
+                                break;
+                            }
+
+                            if(nd < 0 || nd > 10)
+                            {
+                                std::cin.clear();
+                                std::cin.ignore(10000, '\n');
+                                std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+                                continue;
+                            }
+
+                            int* nd_temp = new int[n + 1];
+            
+                            for(int j = 0; j < n; j++)
+                            {
+                                nd_temp[j] = nd_laikinas[j];
+                            }
+                            delete[] nd_laikinas;
+                            nd_laikinas = nd_temp;
+
+                            nd_laikinas[n] = nd;
+                            n++;
+                        }
+                    }
+                    else if(pasirinkimas == 2)
+                    {
+                        if(auto_kiekis == -1)
+                        {
+                            std::cout << "Iveskite norima pazymiu kieki: " << std::endl;
+                            std::cin >> auto_kiekis;
+                        }
+                        nd_laikinas = NDgeneravimas(auto_kiekis);
+                        n = auto_kiekis;
+                    }
+
+                    A[m].kiekis = n;
+                    A[m].nd = new int[n];
+                    for(int i = 0; i < n; i++)
+                    {
+                        A[m].nd[i] = nd_laikinas[i];
+                    }
+                    delete[] nd_laikinas;
+
+                    if(pasirinkimas == 1)
+                    {
+                        while(true)
+                        {
+                        std::cout << "Iveskite " << m + 1 << " studento egzamino rezultata: " << std::endl;
+                        std::cin >> A[m].egzaminas;
+                        if(A[m].egzaminas >= 0 && A[m].egzaminas <= 10)
+                        {
+                            break;
+                        }
+                        std::cin.clear();
+                        std::cin.ignore(10000, '\n');
+                        std::cout << "Ivedete neteisingai, bandykite dar karta!" << std::endl;
+                        }
+                    }
+                    else if(pasirinkimas == 2)
+                    {
+                        A[m].egzaminas = EGZgeneravimas();
+                    }
+                    m++;
+
+                }
+                break;
+            }
+            case 3:
+            {
+                int studentuSK;
+                int n;
+                std::cout << "Kiek studentu sugeneruoti? " << std::endl;
+                std::cin >> studentuSK;
+                m = studentuSK;
+                A = new studentas[m];
+                for(int i = 0; i < m; i++)
+                {
+                    A[i].vardas = vardai[rand() % 10];
+                    A[i].pavarde = pavardes[rand() % 10];
+                }
+                std::cout << "Kiek pazymiu sugeneruoti? " << std::endl;
+                std::cin >> n;
+                for(int i = 0; i < m; i++)
+                {
+                    A[i].kiekis = n;
+                    A[i].nd = NDgeneravimas(n);
+                    A[i].egzaminas = EGZgeneravimas();
+                }
+                break;
+            }
+            case 4:
+            {
+                char budas;
+                while(true)
+                {
+                    std::cout << "Skaiciuoti pagal vidurki (v) ar mediana (m)? " << std::endl;
+                    std::cin >> budas;
+                    if(tolower(budas) == 'v' || tolower(budas) == 'm')
+                    {
+                        break;
+                    }
+                    std::cout << "Ivedete neteisingai, iveskite (v) arba (m)" << std::endl;
+                }
+                spausdinimas(A, m, budas);
+                run = false;
+                break;
+            }
+            default:
+            {
+                std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+                break;
+            }
         }
-        std::cout << "Ivedete neteisingai, iveskite (v) arba (m)" << std::endl;
+
     }
-
-    spausdinimas(A, m, pasirinkimas);
-
-
 
     for(int i = 0; i < m; i++)
     {
         delete[] A[i].nd;
     }
     delete[] A;
-
 }
