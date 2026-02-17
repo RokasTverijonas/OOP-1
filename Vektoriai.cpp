@@ -5,9 +5,10 @@
 #include <cstdlib>
 #include <cctype>
 #include <vector>
+#include <ctime>
 
-const std::string vardai[10] = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
-const std::string pavardes[10] = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
+const std::vector<std::string> vardai = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
+const std::vector<std::string> pavardes = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
 
 struct studentas{
     std::string vardas, pavarde;
@@ -75,7 +76,7 @@ void spausdinimas(std::vector<studentas>& A, char pasirinkimas)
     
     std::cout << "------------------------------------------" << std::endl;
 
-    for(auto s : A)
+    for(auto& s : A)
     {
         double nd_rez;
         if(pasirinkimas == 'm')
@@ -172,7 +173,7 @@ int main() {
                         {
                         std::cout << "Iveskite " << A.size() + 1 << " studento egzamino rezultata: " << std::endl;
                         std::cin >> s.egzaminas;
-                        if(s.egzaminas >= 0 && s.egzaminas <= 10)
+                        if(s.egzaminas > 0 && s.egzaminas <= 10)
                         {
                             break;
                         }
@@ -194,23 +195,36 @@ int main() {
             {
                 int m;
                 int n;
-                std::cout << "Kiek studentu sugeneruoti? " << std::endl;
-                std::cin >> m;
+                std::cout << "Kiek studentu sugeneruoti?(0-10) " << std::endl;
+                while(true)
+                {
+                    std::cin >> m;
+                    if(m >= 0 && m <=10)
+                    {
+                        break;
+                    }
+                    std::cin.clear();
+                    std::cin.ignore(10000, '\n');
+                    std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+                }
+                std::cout << "Kiek pazymiu sugeneruoti? " << std::endl;
+                std::cin >> n;
                 for(int i = 0; i < m; i++)
                 {
                     studentas s;
-                    s.vardas = vardai[rand() % 10];
-                    s.pavarde = pavardes[rand() % 10];
+                    s.vardas = vardai[rand() % vardai.size()];
+                    s.pavarde = pavardes[rand() % pavardes.size()];
                     s.egzaminas = rand() % 10 + 1;
-                
-                std::cout << "Kiek pazymiu sugeneruoti? " << std::endl;
-                std::cin >> n;
-                for(int i = 0; i < n; i++)
-                {
-                    s.nd.push_back(rand() % 10 + 1);
-                }
+                    if(m > 0)
+                    {
+                        for(int i = 0; i < n; i++)
+                        {
+                            s.nd.push_back(rand() % 10 + 1);
+                        }
+                    }
+                    
                 A.push_back(s);
-            }
+                }
                 break;
             }
             case 4:

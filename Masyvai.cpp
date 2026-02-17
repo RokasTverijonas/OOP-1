@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <cctype>
+#include <ctime>
 
 const std::string vardai[10] = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
 const std::string pavardes[10] = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
@@ -237,7 +238,7 @@ int main() {
                         {
                         std::cout << "Iveskite " << m + 1 << " studento egzamino rezultata: " << std::endl;
                         std::cin >> A[m].egzaminas;
-                        if(A[m].egzaminas >= 0 && A[m].egzaminas <= 10)
+                        if(A[m].egzaminas > 0 && A[m].egzaminas <= 10)
                         {
                             break;
                         }
@@ -259,8 +260,19 @@ int main() {
             {
                 int studentuSK;
                 int n;
-                std::cout << "Kiek studentu sugeneruoti? " << std::endl;
-                std::cin >> studentuSK;
+                std::cout << "Kiek studentu sugeneruoti?(1 - 10) " << std::endl;
+                while(true)
+                {
+                    std::cin >> studentuSK;
+                    if(studentuSK >=0 && studentuSK <= 10)
+                    {
+                        break;
+                    }
+                    std::cin.clear();
+                    std::cin.ignore(10000, '\n');
+                    std::cout << "Ivedete neteisingai, bandykite dar karta!";
+
+                }
                 m = studentuSK;
                 A = new studentas[m];
                 for(int i = 0; i < m; i++)
