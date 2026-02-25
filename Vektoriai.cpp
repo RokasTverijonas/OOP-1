@@ -6,6 +6,7 @@
 #include <cctype>
 #include <vector>
 #include <ctime>
+#include <fstream>
 
 const std::vector<std::string> vardai = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
 const std::vector<std::string> pavardes = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
@@ -91,11 +92,39 @@ void spausdinimas(std::vector<studentas>& A, char pasirinkimas)
         std::cout <<std::setw(10) <<  s.vardas << std::setw(15)<< s.pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
     } 
 }
+void skaitymas(std::vector<studentas>& A, std::string failas)
+{
+    std::ifstream input(failas);
+    std::string eilute;
+
+    getline(input, eilute);
+
+    while(getline(input, eilute))
+    {
+        std::stringstream ss(eilute);
+        studentas s;
+        ss >> s.vardas >> s.pavarde;
+
+        std::vector<int> pazymiai;
+        int x;
+        while(ss >> x)
+        {
+            pazymiai.push_back(x);
+        }
+
+        s.egzaminas = pazymiai.back();
+        pazymiai.pop_back();
+
+
+        s.nd = pazymiai;
+        A.push_back(s);
+    }
+}
 
 
 int main() {
 
-    //char pasirinkimas;
+    
     std::vector<studentas> A;
     srand(time(NULL));
     int auto_kiekis = -1;
@@ -251,5 +280,5 @@ int main() {
             }
         }
 
-    }
+    } 
 }
