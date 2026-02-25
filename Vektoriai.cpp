@@ -195,11 +195,11 @@ int main() {
             {
                 int m;
                 int n;
-                std::cout << "Kiek studentu sugeneruoti?(0-10) " << std::endl;
+                std::cout << "Kiek studentu sugeneruoti? " << std::endl;
                 while(true)
                 {
                     std::cin >> m;
-                    if(m >= 0 && m <=10)
+                    if(m >= 0)
                     {
                         break;
                     }
