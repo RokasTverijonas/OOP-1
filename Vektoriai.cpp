@@ -7,6 +7,7 @@
 #include <vector>
 #include <ctime>
 #include <fstream>
+#include <sstream>
 
 const std::vector<std::string> vardai = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
 const std::vector<std::string> pavardes = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
@@ -62,11 +63,22 @@ double galutinis(studentas& A, double balai)
     return 0.4 * balai + 0.6 * A.egzaminas;
 }
 
-void spausdinimas(std::vector<studentas>& A, char pasirinkimas)
+void spausdinimas(std::vector<studentas>& A)
 {
+    char budas;
+    while(true)
+    {
+        std::cout << "Skaiciuoti pagal vidurki (v) ar mediana (m)? " << std::endl;
+        std::cin >> budas;
+        if(tolower(budas) == 'v' || tolower(budas) == 'm')
+        {
+            break;
+        }
+        std::cout << "Ivedete neteisingai, iveskite (v) arba (m)" << std::endl;
+    }
     std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde";
     
-    if(pasirinkimas == 'm')
+    if(budas == 'm')
     {
         std::cout << std::setw(20) << "Galutinis (Med.)" << std::endl;
     }
@@ -80,7 +92,7 @@ void spausdinimas(std::vector<studentas>& A, char pasirinkimas)
     for(auto& s : A)
     {
         double nd_rez;
-        if(pasirinkimas == 'm')
+        if(budas == 'm')
         {
             nd_rez = mediana(s);
         }
@@ -119,6 +131,23 @@ void skaitymas(std::vector<studentas>& A, std::string failas)
         s.nd = pazymiai;
         A.push_back(s);
     }
+}
+void failoSpausdinimas(std::vector<studentas>& A)
+{
+    std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde"
+    << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Galutinis (Med.)" << std::endl;
+
+    std::cout << "--------------------------------------------------------------" << std::endl;
+
+    
+    for(auto& s : A)
+    {
+        std::cout << std::setw(10) << s.vardas << std::setw(15) << s.pavarde;
+
+        std::cout << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, vidurkis(s)) << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, mediana(s)) << std::endl;
+        
+    }
+
 }
 
 
@@ -257,21 +286,17 @@ int main() {
                 }
                 break;
             }
+            case 4:
+            {
+                skaitymas(A, "kursiokai.txt");
+                failoSpausdinimas(A);
+                run = false;
+                break;
+            }
             
             case 5:
             {
-                char budas;
-                while(true)
-                {
-                    std::cout << "Skaiciuoti pagal vidurki (v) ar mediana (m)? " << std::endl;
-                    std::cin >> budas;
-                    if(tolower(budas) == 'v' || tolower(budas) == 'm')
-                    {
-                        break;
-                    }
-                    std::cout << "Ivedete neteisingai, iveskite (v) arba (m)" << std::endl;
-                }
-                spausdinimas(A,budas);
+                spausdinimas(A);
                 run = false;
                 break;
             }
@@ -282,5 +307,5 @@ int main() {
             }
         }
 
-    } 
+    }
 }
