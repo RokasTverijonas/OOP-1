@@ -150,6 +150,37 @@ void failoSpausdinimas(std::vector<studentas>& A)
 
 }
 
+void rikiavimas(std::vector<studentas>& A)
+{
+    char kriterijus;
+    while(true)
+    {
+        std::cout << "Pagal ka rikiuoti? " << std::endl;
+        std::cout << " 1 - varda " << std::endl;
+        std::cout << " 2 - pavarde " << std::endl;
+        std::cout << " 3 - Galutni (vidurkis) " << std::endl;
+        std::cout << " 4 - Galutini (mediana) " << std:: endl;
+        std::cin >> kriterijus;
+        if(kriterijus == '1' || kriterijus == '2' || kriterijus == '3' || kriterijus == '4')
+        {
+            break;
+        }
+        std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+    }
+    switch(kriterijus)
+    {
+        case '1' : 
+        {
+            std::sort(A.begin(), A.end(), [](studentas a, studentas b)
+        {
+            return a.vardas < b.vardas;
+        });
+        break;
+        }
+    }
+
+}
+
 
 int main() {
 
@@ -289,6 +320,7 @@ int main() {
             case 4:
             {
                 skaitymas(A, "kursiokai.txt");
+                rikiavimas(A);
                 failoSpausdinimas(A);
                 run = false;
                 break;
