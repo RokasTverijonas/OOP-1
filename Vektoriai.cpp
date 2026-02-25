@@ -136,7 +136,8 @@ int main() {
         std::cout << "1 - Ivesti ranka; " << std::endl;
         std::cout << "2 - Generuoti tik pazymius; " << std::endl;
         std::cout << "3 - Generuoti studentu vardus, pavardes ir pazymius; " << std::endl;
-        std::cout << "4 - Baigti darbą; " << std::endl;
+        std::cout << "4 - Skaityti informacija is failo; " << std::endl;
+        std::cout << "5 - Baigti darbą; " << std::endl;
         std::cout << " Pasirinkite ";
         int pasirinkimas;
         std::cin >> pasirinkimas;
@@ -256,7 +257,8 @@ int main() {
                 }
                 break;
             }
-            case 4:
+            
+            case 5:
             {
                 char budas;
                 while(true)
