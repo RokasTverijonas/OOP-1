@@ -18,7 +18,7 @@ struct studentas{
     int egzaminas;
 };
 
-double vidurkis(studentas& A)
+double vidurkis(const studentas& A)
 {
     if(A.nd.empty())
     {
@@ -34,7 +34,7 @@ double vidurkis(studentas& A)
     return vidurkis;
 }
 
-double mediana(studentas& A)
+double mediana(const studentas& A)
 {
     if(A.nd.empty())
     {
@@ -58,7 +58,7 @@ double mediana(studentas& A)
 
 }
 
-double galutinis(studentas& A, double balai)
+double galutinis(const studentas& A, double balai)
 {
     return 0.4 * balai + 0.6 * A.egzaminas;
 }
@@ -152,7 +152,7 @@ void failoSpausdinimas(std::vector<studentas>& A)
 
 void rikiavimas(std::vector<studentas>& A)
 {
-    char kriterijus;
+    int kriterijus;
     while(true)
     {
         std::cout << "Pagal ka rikiuoti? " << std::endl;
@@ -161,7 +161,7 @@ void rikiavimas(std::vector<studentas>& A)
         std::cout << " 3 - Galutni (vidurkis) " << std::endl;
         std::cout << " 4 - Galutini (mediana) " << std:: endl;
         std::cin >> kriterijus;
-        if(kriterijus == '1' || kriterijus == '2' || kriterijus == '3' || kriterijus == '4')
+        if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
         {
             break;
         }
@@ -169,14 +169,40 @@ void rikiavimas(std::vector<studentas>& A)
     }
     switch(kriterijus)
     {
-        case '1' : 
+        case 1: 
         {
-            std::sort(A.begin(), A.end(), [](studentas a, studentas b)
+            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
         {
             return a.vardas < b.vardas;
         });
         break;
         }
+        case 2:
+        {
+            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
+        {
+            return a.pavarde < b.pavarde;
+        });
+        break;
+        }
+        case 3:
+        {
+            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
+        {
+            return galutinis(a, vidurkis(a)) < galutinis(b, vidurkis(b));
+        });
+        break;
+        }
+        case 4:
+        {
+            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
+        {
+            return galutinis(a, mediana(a)) < galutinis(b, mediana(b));
+        });
+        break;
+        }
+
+
     }
 
 }
