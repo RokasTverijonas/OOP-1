@@ -107,6 +107,12 @@ void spausdinimas(std::vector<studentas>& A)
 void skaitymas(std::vector<studentas>& A, std::string failas)
 {
     std::ifstream input(failas);
+
+    if(!input.is_open())
+    {
+        std::cout << "Nepavyko atyidaryti failo!" << std::endl;
+        return;
+    }
     std::string eilute;
 
     getline(input, eilute);
@@ -377,7 +383,11 @@ int main() {
             }
             case 4:
             {
-                skaitymas(A, "kursiokai.txt");
+                std::string failas;
+                std::cout << "Pasirinkite faila: " <<std::endl;
+                std::cout << "kursiokai.txt , studentai10000.txt, studentai100000.txt, studentai1000000.txt" << std::endl;
+                std::cin >> failas;
+                skaitymas(A, failas);
                 rikiavimas(A);
                 failoSpausdinimas(A);
                 run = false;
