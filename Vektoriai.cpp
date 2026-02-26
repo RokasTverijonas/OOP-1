@@ -8,6 +8,7 @@
 #include <ctime>
 #include <fstream>
 #include <sstream>
+#include <chrono>
 
 const std::vector<std::string> vardai = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
 const std::vector<std::string> pavardes = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
@@ -245,6 +246,27 @@ void rikiavimas(std::vector<studentas>& A)
 
 }
 
+void skaitymoTestai(std::vector<studentas>& A, std::string failas)
+{
+    int kartai = 5;
+    double bendras = 0.0;
+
+    for(int i = 0; i < kartai; i++)
+    {
+        A.clear();
+        auto start = std::chrono::steady_clock::now();
+
+        skaitymas(A, failas);
+
+        auto end = std::chrono::steady_clock::now();
+
+        std::chrono::duration<double> diff = end - start;
+        bendras += diff.count();
+    }
+
+    std::cout << "failo " << failas << " nuskaitymo vidurkis: " << bendras / kartai << "s." << std::endl;
+}
+
 
 int main() {
 
@@ -390,6 +412,7 @@ int main() {
                 skaitymas(A, failas);
                 rikiavimas(A);
                 failoSpausdinimas(A);
+                skaitymoTestai(A, "kursiokai.txt");
                 run = false;
                 break;
             }
