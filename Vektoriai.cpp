@@ -134,7 +134,20 @@ void skaitymas(std::vector<studentas>& A, std::string failas)
 }
 void failoSpausdinimas(std::vector<studentas>& A)
 {
-    std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde"
+    char isvedimas;
+    while(true)
+    {
+        std::cout << "Isvesti ekrane ar faile? (e) - ekrane, (f) - faile " << std::endl;
+        std::cin >> isvedimas;
+        if(isvedimas == 'e' || isvedimas == 'f')
+        {
+            break;
+        }
+        std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+    }
+    if(isvedimas == 'e')
+    {
+        std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde"
     << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Galutinis (Med.)" << std::endl;
 
     std::cout << "--------------------------------------------------------------" << std::endl;
@@ -146,6 +159,25 @@ void failoSpausdinimas(std::vector<studentas>& A)
 
         std::cout << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, vidurkis(s)) << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, mediana(s)) << std::endl;
         
+    }
+    }
+    else
+    {
+        std:: ofstream failas("rezultatai.txt");
+        failas << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde"
+    << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Galutinis (Med.)" << std::endl;
+
+    std::cout << "--------------------------------------------------------------" << std::endl;
+
+    
+    for(auto& s : A)
+    {
+        failas << std::setw(10) << s.vardas << std::setw(15) << s.pavarde;
+
+        failas << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, vidurkis(s)) << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, mediana(s)) << std::endl;
+        
+    }
+    std::cout << "Rezultatai isvesti faile pavadinimu 'rezultatai.txt'" << std::endl;
     }
 
 }
