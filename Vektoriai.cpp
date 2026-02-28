@@ -71,7 +71,8 @@ void spausdinimas(std::vector<studentas>& A)
     {
         std::cout << "Skaiciuoti pagal vidurki (v) ar mediana (m)? " << std::endl;
         std::cin >> budas;
-        if(tolower(budas) == 'v' || tolower(budas) == 'm')
+        budas = tolower(budas);
+        if(budas == 'v' || budas == 'm')
         {
             break;
         }
@@ -171,15 +172,15 @@ void failoSpausdinimas(std::vector<studentas>& A)
     else
     {
         std:: ofstream failas("rezultatai.txt");
-        failas << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde"
+        failas << std::left << std::setw(15) << "Vardas" << std::setw(20) << "Pavarde"
     << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Galutinis (Med.)" << std::endl;
 
-    std::cout << "--------------------------------------------------------------" << std::endl;
+    failas << "--------------------------------------------------------------" << std::endl;
 
     
     for(auto& s : A)
     {
-        failas << std::setw(10) << s.vardas << std::setw(15) << s.pavarde;
+        failas << std::setw(15) << s.vardas << std::setw(20) << s.pavarde;
 
         failas << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, vidurkis(s)) << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, mediana(s)) << std::endl;
         
@@ -250,6 +251,17 @@ void skaitymoTestai(std::vector<studentas>& A, std::string failas)
 {
     int kartai = 5;
     double bendras = 0.0;
+    
+    while(true)
+    {
+        std::cout << "Kuri faila nuskaityti testavimui?" << std::endl;
+        std::cin >> failas;
+        if(failas == "kursiokai.txt" || failas == "studentai10000.txt" || failas == "studentai100000.txt" || failas == "studentai1000000.txt")
+        {
+            break;
+        }
+        std::cout << "Bandykite ivest dar karta! " << std::endl;
+    }
 
     for(int i = 0; i < kartai; i++)
     {
@@ -412,7 +424,7 @@ int main() {
                 skaitymas(A, failas);
                 rikiavimas(A);
                 failoSpausdinimas(A);
-                skaitymoTestai(A, "kursiokai.txt");
+                skaitymoTestai(A, "studentai1000000.txt");
                 run = false;
                 break;
             }
