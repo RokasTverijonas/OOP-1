@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <stdexcept>
 #include "studentas.h"
 #include "skaiciavimai.h"
 #include "skaitymas.h"
@@ -14,7 +15,7 @@ int main(){
     
     std::vector<studentas> A;
     srand(time(NULL));
-    bool run = false;
+    bool run = true;
     int auto_kiekis = -1;
 
     while(run)
@@ -27,7 +28,19 @@ int main(){
         std::cout << "5 - Baigti darbą; " << std::endl;
         std::cout << " Pasirinkite ";
         int pasirinkimas;
-        std::cin >> pasirinkimas;
+        try{
+            std::cin >> pasirinkimas;
+            if(std::cin.fail())
+            {
+                throw std::invalid_argument("Ivestis nera sveikasis skaicius. ");
+            }
+        } catch(std::exception& e) {
+            std::cout << "Klaida: " << e.what() << std::endl;
+
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+        }
+        
 
         switch(pasirinkimas)
         {
