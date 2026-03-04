@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <stdexcept>
+#include <windows.h>
 #include "studentas.h"
 #include "skaiciavimai.h"
 #include "skaitymas.h"
@@ -13,6 +14,8 @@ const std::vector<std::string> pavardes = {"Brazdeikis" , "Kazlauskas", "Macijau
 
 int main(){
     
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
     std::vector<studentas> A;
     srand(time(NULL));
     bool run = true;
