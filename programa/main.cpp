@@ -32,13 +32,18 @@ int main(){
             std::cin >> pasirinkimas;
             if(std::cin.fail())
             {
-                throw std::invalid_argument("Ivestis nera sveikasis skaicius. ");
+                throw std::invalid_argument("Įvestis nėra sveikasis skaičius. ");
+            }
+            if(pasirinkimas < 1 || pasirinkimas > 5) 
+            {
+                throw std::out_of_range("Pasirinkimas už leistino intervalo (1-5) ribų");
             }
         } catch(std::exception& e) {
             std::cout << "Klaida: " << e.what() << std::endl;
 
             std::cin.clear();
             std::cin.ignore(10000, '\n');
+            continue;
         }
         
 
