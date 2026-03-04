@@ -8,12 +8,13 @@
 
 void skaitymas(std::vector<studentas>& A, std::string failas)
 {
+    try{
+
     std::ifstream input(failas);
 
     if(!input.is_open())
     {
-        std::cout << "Nepavyko atyidaryti failo!" << std::endl;
-        return;
+        throw std::runtime_error("Pasirinkto failo nepavyko atidaryti!");
     }
     std::string eilute;
 
@@ -38,6 +39,9 @@ void skaitymas(std::vector<studentas>& A, std::string failas)
 
         s.nd = pazymiai;
         A.push_back(s);
+    }
+    }catch(std::exception& e) {
+        std::cout << "Klaida: " << e.what() << std::endl;
     }
 }
 
