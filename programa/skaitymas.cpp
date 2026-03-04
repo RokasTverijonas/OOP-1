@@ -8,8 +8,6 @@
 
 void skaitymas(std::vector<studentas>& A, std::string failas)
 {
-    try{
-
     std::ifstream input(failas);
 
     if(!input.is_open())
@@ -39,9 +37,6 @@ void skaitymas(std::vector<studentas>& A, std::string failas)
 
         s.nd = pazymiai;
         A.push_back(s);
-    }
-    }catch(std::exception& e) {
-        std::cout << "Klaida: " << e.what() << std::endl;
     }
 }
 

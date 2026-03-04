@@ -159,11 +159,22 @@ int main(){
             }
             case 4:
             {
-                std::string failas;
-                std::cout << "Pasirinkite faila: " <<std::endl;
-                std::cout << "kursiokai.txt , studentai10000.txt, studentai100000.txt, studentai1000000.txt" << std::endl;
-                std::cin >> failas;
-                skaitymas(A, failas);
+                bool tinka = true;
+                while(tinka)
+                {
+                    std::string failas;
+                    std::cout << "Pasirinkite faila: " <<std::endl;
+                    std::cout << "kursiokai.txt , studentai10000.txt, studentai100000.txt, studentai1000000.txt" << std::endl;
+                    std::cin >> failas;
+                    try{
+                        skaitymas(A, failas);
+                        tinka = false;
+                    } catch(std::exception& e) {
+                        std::cout << "Klaida: " << e.what() << std::endl;
+                        std::cout<< "Bandykite dar karta!" << std::endl;
+                    }
+
+                }
                 rikiavimas(A);
                 failoSpausdinimas(A);
                 skaitymoTestai(A, "studentai1000000.txt");
