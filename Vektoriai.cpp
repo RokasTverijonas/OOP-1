@@ -139,6 +139,7 @@ void skaitymas(std::vector<studentas>& A, std::string failas)
         s.nd = pazymiai;
         A.push_back(s);
     }
+    input.close();
 }
 void failoSpausdinimas(std::vector<studentas>& A)
 {
@@ -245,38 +246,6 @@ void rikiavimas(std::vector<studentas>& A)
 
     }
 
-}
-
-void skaitymoTestai(std::vector<studentas>& A, std::string failas)
-{
-    int kartai = 5;
-    double bendras = 0.0;
-    
-    while(true)
-    {
-        std::cout << "Kuri faila nuskaityti testavimui?" << std::endl;
-        std::cin >> failas;
-        if(failas == "kursiokai.txt" || failas == "studentai10000.txt" || failas == "studentai100000.txt" || failas == "studentai1000000.txt")
-        {
-            break;
-        }
-        std::cout << "Bandykite ivest dar karta! " << std::endl;
-    }
-
-    for(int i = 0; i < kartai; i++)
-    {
-        A.clear();
-        auto start = std::chrono::steady_clock::now();
-
-        skaitymas(A, failas);
-
-        auto end = std::chrono::steady_clock::now();
-
-        std::chrono::duration<double> diff = end - start;
-        bendras += diff.count();
-    }
-
-    std::cout << "failo " << failas << " nuskaitymo vidurkis: " << bendras / kartai << "s." << std::endl;
 }
 
 
@@ -421,10 +390,14 @@ int main() {
                 std::cout << "Pasirinkite faila: " <<std::endl;
                 std::cout << "kursiokai.txt , studentai10000.txt, studentai100000.txt, studentai1000000.txt" << std::endl;
                 std::cin >> failas;
+                auto start = std::chrono::steady_clock::now();
                 skaitymas(A, failas);
+                auto end = std::chrono::steady_clock::now();
+                std::chrono::duration<double> diff = end - start;
+                double bendras = diff.count();
                 rikiavimas(A);
                 failoSpausdinimas(A);
-                skaitymoTestai(A, "studentai1000000.txt");
+                std::cout << "Failo : " << failas <<  " nuskaitymo laikas: " << bendras << "s" << std::endl;
                 run = false;
                 break;
             }
