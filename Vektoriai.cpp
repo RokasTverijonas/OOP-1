@@ -141,19 +141,9 @@ void skaitymas(std::vector<studentas>& A, std::string failas)
     }
     input.close();
 }
-void failoSpausdinimas(std::vector<studentas>& A)
+void failoSpausdinimas(std::vector<studentas>& A, char isvedimas)
 {
-    char isvedimas;
-    while(true)
-    {
-        std::cout << "Isvesti ekrane ar faile? (e) - ekrane, (f) - faile " << std::endl;
-        std::cin >> isvedimas;
-        if(isvedimas == 'e' || isvedimas == 'f')
-        {
-            break;
-        }
-        std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
-    }
+    
     if(isvedimas == 'e')
     {
         std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde"
@@ -191,23 +181,9 @@ void failoSpausdinimas(std::vector<studentas>& A)
 
 }
 
-void rikiavimas(std::vector<studentas>& A)
+void rikiavimas(std::vector<studentas>& A, int kriterijus)
 {
-    int kriterijus;
-    while(true)
-    {
-        std::cout << "Pagal ka rikiuoti? " << std::endl;
-        std::cout << " 1 - varda " << std::endl;
-        std::cout << " 2 - pavarde " << std::endl;
-        std::cout << " 3 - Galutni (vidurkis) " << std::endl;
-        std::cout << " 4 - Galutini (mediana) " << std:: endl;
-        std::cin >> kriterijus;
-        if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
-        {
-            break;
-        }
-        std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
-    }
+    
     switch(kriterijus)
     {
         case 1: 
@@ -390,14 +366,50 @@ int main() {
                 std::cout << "Pasirinkite faila: " <<std::endl;
                 std::cout << "kursiokai.txt , studentai10000.txt, studentai100000.txt, studentai1000000.txt" << std::endl;
                 std::cin >> failas;
-                auto start = std::chrono::steady_clock::now();
+                auto start1 = std::chrono::high_resolution_clock::now();
                 skaitymas(A, failas);
-                auto end = std::chrono::steady_clock::now();
-                std::chrono::duration<double> diff = end - start;
-                double bendras = diff.count();
-                rikiavimas(A);
-                failoSpausdinimas(A);
-                std::cout << "Failo : " << failas <<  " nuskaitymo laikas: " << bendras << "s" << std::endl;
+                auto end1 = std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double> diff = end1 - start1;
+                double bendras1 = diff.count();
+                int kriterijus;
+                while(true)
+                {
+                    std::cout << "Pagal ka rikiuoti? " << std::endl;
+                    std::cout << " 1 - varda " << std::endl;
+                    std::cout << " 2 - pavarde " << std::endl;
+                    std::cout << " 3 - Galutni (vidurkis) " << std::endl;
+                    std::cout << " 4 - Galutini (mediana) " << std:: endl;
+                    std::cin >> kriterijus;
+                    if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
+                    {
+                        break;
+                    }
+                    std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+    }
+                auto start2 = std::chrono::high_resolution_clock::now();
+                rikiavimas(A, kriterijus);
+                auto end2 = std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double> diff2 = end2 - start2;
+                double bendras2 = diff2.count();
+                char isvedimas;
+                while(true)
+                {          
+                    std::cout << "Isvesti ekrane ar faile? (e) - ekrane, (f) - faile " << std::endl;
+                    std::cin >> isvedimas;
+                    if(isvedimas == 'e' || isvedimas == 'f')
+                    {
+                        break;
+                    }
+                    std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+                }
+                auto start3 = std::chrono::high_resolution_clock::now();
+                failoSpausdinimas(A, isvedimas);
+                auto end3 = std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double> diff3 = end3 - start3;
+                double bendras3 = diff3.count();
+                std::cout << "Failo : " << failas <<  " nuskaitymo laikas: " << std::fixed << std::setprecision(2) <<  bendras1 << "s" << std::endl;
+                std::cout << "Failo : " << failas <<  " rikiavimo laikas: " << std::fixed << std::setprecision(2) <<  bendras2 << "s" << std::endl;
+                std::cout << "Failo : " << failas <<  " skaiciavimo/isvedimo laikas: " << std::fixed << std::setprecision(2) <<  bendras3 << "s" << std::endl;
                 run = false;
                 break;
             }
