@@ -186,7 +186,7 @@ void failoGeneravimas(int studKiekis) {
 
 }
 
-void StudentuRusiavimas(const std::vector<studentas>& A, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai)
+void StudentuPadalinimas(const std::vector<studentas>& A, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai)
 {
     for(const auto& s : A)
     {
@@ -202,3 +202,32 @@ void StudentuRusiavimas(const std::vector<studentas>& A, std::vector<studentas>&
 
 }
 
+void atskiriFailai(std::string failas, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai)
+{
+    std::ofstream vargsuf("vargsai_" + failas);
+    std::ofstream kietekuf("kietekai_" + failas);
+
+    vargsuf << std::left << std::setw(12) << "Vardas" << std::setw(12) << "Pavarde"
+    << std::setw(20) << "Galutinis(Vid.)" << std::setw(20) << "Galutinis(Med.)" << "\n";
+
+    kietekuf << std::left << std::setw(12) << "Vardas" << std::setw(12) << "Pavarde"
+    << std::setw(20) << "Galutinis(Vid.)" << std::setw(20) << "Galutinis(Med.)" << "\n";
+
+    for(auto& s : vargsai)
+    {
+        vargsuf << std::setw(15) << s.vardas << std::setw(20) << s.pavarde;
+
+        vargsuf << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
+        
+    }
+
+    for(auto& s : kietekai)
+    {
+        kietekuf << std::setw(15) << s.vardas << std::setw(20) << s.pavarde;
+
+        kietekuf << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
+        
+    }
+    
+
+}
