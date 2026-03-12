@@ -17,6 +17,8 @@ int main(){
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     std::vector<studentas> A;
+    std::vector<studentas> vargsai;
+    std::vector<studentas> kietekai;
     srand(time(NULL));
     bool run = true;
     int auto_kiekis = -1;

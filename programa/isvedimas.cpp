@@ -181,5 +181,24 @@ void failoGeneravimas(int studKiekis) {
         }
         out << std::setw(6) << (rand() % 10 + 1) << "\n";
     }
+    
+    out.close();
 
 }
+
+void StudentuRusiavimas(const std::vector<studentas>& A, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai)
+{
+    for(const auto& s : A)
+    {
+        if(s.galutinisVid < 5.0)
+        {
+            vargsai.push_back(s);
+        }
+        else
+        {
+            kietekai.push_back(s);
+        }
+    }
+
+}
+
