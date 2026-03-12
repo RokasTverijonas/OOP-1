@@ -47,7 +47,7 @@ void rikiavimas(std::vector<studentas>& A)
         {
             std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
         {
-            return galutinis(a, vidurkis(a)) < galutinis(b, vidurkis(b));
+            return a.galutinisVid < b.galutinisVid;
         });
         break;
         }
@@ -55,7 +55,7 @@ void rikiavimas(std::vector<studentas>& A)
         {
             std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
         {
-            return galutinis(a, mediana(a)) < galutinis(b, mediana(b));
+            return a.galutinisMed < b.galutinisMed;
         });
         break;
         }
@@ -94,17 +94,15 @@ void spausdinimas(std::vector<studentas>& A)
 
     for(auto& s : A)
     {
-        double nd_rez;
+        std::cout <<std::setw(10) <<  s.vardas << std::setw(15)<< s.pavarde;
         if(budas == 'm')
         {
-            nd_rez = mediana(s);
+            std::cout << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
         }
         else
         {
-            nd_rez = vidurkis(s);
+            std::cout << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::endl;
         }
-        double galutinis_rez = galutinis(s, nd_rez);
-        std::cout <<std::setw(10) <<  s.vardas << std::setw(15)<< s.pavarde << std::setw(20) << std::fixed << std::setprecision(2) << galutinis_rez << std::endl;
     } 
 }
 
@@ -133,7 +131,7 @@ void failoSpausdinimas(std::vector<studentas>& A)
     {
         std::cout << std::setw(10) << s.vardas << std::setw(15) << s.pavarde;
 
-        std::cout << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, vidurkis(s)) << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, mediana(s)) << std::endl;
+        std::cout << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
         
     }
     }
@@ -150,7 +148,7 @@ void failoSpausdinimas(std::vector<studentas>& A)
     {
         failas << std::setw(15) << s.vardas << std::setw(20) << s.pavarde;
 
-        failas << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, vidurkis(s)) << std::setw(20) << std::fixed << std::setprecision(2) << galutinis(s, mediana(s)) << std::endl;
+        failas << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
         
     }
     std::cout << "Rezultatai isvesti faile pavadinimu 'rezultatai.txt'" << std::endl;

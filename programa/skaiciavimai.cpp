@@ -8,10 +8,12 @@ double vidurkis(const studentas& A)
     {
         return 0.0;
     }
+
     double suma = 0;
-    for(int i = 0; i < A.nd.size(); i++)
+
+    for(int x : A.nd)
     {
-        suma += A.nd[i];
+        suma += x;
     }
     double vidurkis = suma / A.nd.size();
 
@@ -29,16 +31,14 @@ double mediana(const studentas& A)
 
     int n = temp.size(); 
 
-    double rez;
-    if(n % 2 != 0)
+    if(n % 2 == 0)
     {
-        rez = temp[n / 2];
+        return (temp[n / 2] + temp[(n - 1) / 2]) / 2.0;
     }
     else
     {
-        rez = (temp[n / 2] + temp[(n - 1) / 2]) / 2.0;
+        return temp[n/2];
     }
-    return rez;
 
 }
 

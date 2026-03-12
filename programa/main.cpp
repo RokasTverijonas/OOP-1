@@ -124,6 +124,10 @@ int main(){
                     {
                         s.egzaminas = rand() % 10 + 1;
                     }
+
+                    s.galutinisVid = galutinis(s, vidurkis(s));
+                    s.galutinisMed = galutinis(s, mediana(s));
+
                     A.push_back(s);
 
                 }
@@ -160,8 +164,11 @@ int main(){
                             s.nd.push_back(rand() % 10 + 1);
                         }
                     }
+
+                    s.galutinisVid = galutinis(s, vidurkis(s));
+                    s.galutinisMed = galutinis(s, mediana(s));
                     
-                A.push_back(s);
+                    A.push_back(s);
                 }
                 break;
             }

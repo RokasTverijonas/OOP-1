@@ -3,6 +3,7 @@
 #include <sstream>
 #include <chrono>
 #include "skaitymas.h"
+#include "skaiciavimai.h"
 
 
 
@@ -36,6 +37,9 @@ void skaitymas(std::vector<studentas>& A, std::string failas)
 
 
         s.nd = pazymiai;
+        s.galutinisVid = (s, vidurkis(s));
+        s.galutinisMed = (s, mediana(s));
+
         A.push_back(s);
     }
 }
