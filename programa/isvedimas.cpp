@@ -162,14 +162,24 @@ void failoGeneravimas(int studKiekis) {
     std::string failas = "studentai" + std::to_string(studKiekis) + ".txt";
     std::ofstream out(failas);
 
+    out << std::left << std::setw(12) << "Vardas" << std::setw(12) << "Pavarde";
+
+    for(int i = 1; i < pazymiuKiekis; i++)
+    {
+        out << std::setw(4) << "ND" + std::to_string(i);
+    }
+    out << std::setw(6) << "Galutinis" << "\n";
+
+
     for(int i = 1; i <= studKiekis; i++)
     {
-        out << "VardasNR" << i << " " << "PavardeNR" << i << " ";
+        out << std::left << std::setw(12) << "VardasNR" + std::to_string(i) << std::setw(12) << "PavardeNR" + std::to_string(i);
 
         for(int j = 0; j < pazymiuKiekis; j++)
         {
-            out << (rand() % 10 + 1) << " ";
+            out << std::setw(4) <<  (rand() % 10 + 1);
         }
-        out << (rand() % 10 + 1) << "\n";
+        out << std::setw(6) << (rand() % 10 + 1) << "\n";
     }
+
 }
