@@ -206,6 +206,11 @@ int main(){
             failoGeneravimas(100000);
             failoGeneravimas(1000000);
             failoGeneravimas(10000000);
+            skaitymas(A, "studentai10000.txt");
+            StudentuPadalinimas(A, vargsai, kietekai);
+            atskiriFailai("studentai10000.txt", vargsai, kietekai);
+
+
             break;
             }
             
