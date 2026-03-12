@@ -7,5 +7,6 @@
 void rikiavimas(std::vector<studentas>& A);
 void spausdinimas(std::vector<studentas>& A);
 void failoSpausdinimas(std::vector<studentas>& A);
+void failoGeneravimas(int studKiekis);
 
 #endif

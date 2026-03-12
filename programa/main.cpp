@@ -28,7 +28,8 @@ int main(){
         std::cout << "2 - Generuoti tik pazymius; " << std::endl;
         std::cout << "3 - Generuoti studentu vardus, pavardes ir pazymius; " << std::endl;
         std::cout << "4 - Skaityti informacija is failo; " << std::endl;
-        std::cout << "5 - Baigti darbą; " << std::endl;
+        std::cout << "5 - Generuoti studentų failą; " << std::endl;
+        std::cout << "6 - Baigti darbą; " << std::endl;
         std::cout << " Pasirinkite ";
         int pasirinkimas;
         try{
@@ -37,7 +38,7 @@ int main(){
             {
                 throw std::invalid_argument("Įvestis nėra sveikasis skaičius. ");
             }
-            if(pasirinkimas < 1 || pasirinkimas > 5) 
+            if(pasirinkimas < 1 || pasirinkimas > 6) 
             {
                 throw std::out_of_range("Pasirinkimas už leistino intervalo (1-5) ribų");
             }
@@ -196,8 +197,13 @@ int main(){
                 run = false;
                 break;
             }
-            
             case 5:
+            {
+            failoGeneravimas(10000);
+            break;
+            }
+            
+            case 6:
             {
                 spausdinimas(A);
                 run = false;

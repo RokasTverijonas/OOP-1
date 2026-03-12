@@ -155,3 +155,21 @@ void failoSpausdinimas(std::vector<studentas>& A)
     }
 
 }
+
+void failoGeneravimas(int studKiekis) {
+    
+    int pazymiuKiekis = 10;
+    std::string failas = "studentai" + std::to_string(studKiekis) + ".txt";
+    std::ofstream out(failas);
+
+    for(int i = 1; i <= studKiekis; i++)
+    {
+        out << "VardasNR" << i << " " << "PavardeNR" << i << " ";
+
+        for(int j = 0; j < pazymiuKiekis; j++)
+        {
+            out << (rand() % 10 + 1) << " ";
+        }
+        out << (rand() % 10 + 1) << "\n";
+    }
+}
