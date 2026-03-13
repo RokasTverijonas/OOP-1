@@ -37,8 +37,8 @@ void skaitymas(std::vector<studentas>& A, std::string failas)
 
 
         s.nd = pazymiai;
-        s.galutinisVid = (s, vidurkis(s));
-        s.galutinisMed = (s, mediana(s));
+        s.galutinisVid = galutinis(s, vidurkis(s));
+        s.galutinisMed = galutinis(s, mediana(s));
 
         A.push_back(s);
     }

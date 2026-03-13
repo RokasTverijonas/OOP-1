@@ -248,6 +248,11 @@ void tyrimasAntras(std::vector<studentas>& A, std::vector<studentas>& vargsai, s
 {
     std::vector<int> studKiekis = {1000, 10000, 100000, 1000000, 10000000};
 
+    std::cout << std::left << std::setw(12) << "Studentai" << std::setw(15) << "Skaitymas"
+    << std::setw(15) << "Padalinimas" << std::setw(15) << "Atskiri f." 
+    << std::setw(15) << "Bendras laikas" << std::endl;
+
+
     for(auto x : studKiekis)
     {
         std::vector<studentas> stud;
@@ -261,7 +266,7 @@ void tyrimasAntras(std::vector<studentas>& A, std::vector<studentas>& vargsai, s
 
         //rikiavimas
         auto start2 = std::chrono::high_resolution_clock::now();
-        StudentuPadalinimas(A, vargsai, kietekai);
+        StudentuPadalinimas(stud, vargsai, kietekai, kriterijus);
         auto end2 = std::chrono::high_resolution_clock::now();
 
         std::chrono::duration<double> diff2 = end2 - start2;
@@ -276,11 +281,9 @@ void tyrimasAntras(std::vector<studentas>& A, std::vector<studentas>& vargsai, s
         //bendras
         double visas = diff1.count() + diff2.count() + diff3.count();
 
-
-
-
-
-
+        std::cout << std::left << std::setw(12) << x << std::setw(15) << diff1.count()
+        << std::setw(15) << diff2.count() << std::setw(15) << diff3.count() 
+        << std::setw(15) << visas << std::endl;
 
 
     }

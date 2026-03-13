@@ -245,9 +245,7 @@ int main(){
             }
             failoGeneravimas(kiekis);
             skaitymas(A, "studentai" + std::to_string(kiekis) + ".txt");
-            StudentuPadalinimas(A, vargsai, kietekai);
-            rikiavimas(vargsai, kriterijus);
-            rikiavimas(kietekai, kriterijus);
+            StudentuPadalinimas(A, vargsai, kietekai, kriterijus);
             atskiriFailai("studentai" + std::to_string(kiekis) + ".txt", vargsai, kietekai);
             break;
             }

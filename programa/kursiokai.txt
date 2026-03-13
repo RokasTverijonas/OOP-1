@@ -1,0 +1,6 @@
+Vardas	Pavardė	   ND1 ND2 ND3 ND4 ND5 Egzaminas
+Rokas	Rokaitis   6   9   8   3   7   6
+Jonas	Jonaitis   9   4   7   9   9   2
+Lukas	Lukaitis   8   10  8   7   6   7
+Kazys	Kaziukas   9   9   5   6   5   8
+Tomas	Tomaitis   10  3   8   7   4   10
