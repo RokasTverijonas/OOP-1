@@ -194,7 +194,22 @@ int main(){
                     }
 
                 }
-                rikiavimas(A);
+                int kriterijus;
+                while(true)
+                {
+                    std::cout << "Pagal ka rikiuoti? " << std::endl;
+                    std::cout << " 1 - varda " << std::endl;
+                    std::cout << " 2 - pavarde " << std::endl;
+                    std::cout << " 3 - Galutni (vidurkis) " << std::endl;
+                    std::cout << " 4 - Galutini (mediana) " << std:: endl;
+                    std::cin >> kriterijus;
+                    if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
+                    {
+                        break;
+                    }
+                    std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+                }
+                rikiavimas(A,kriterijus);
                 failoSpausdinimas(A);
                 skaitymoTestai(A, "studentai1000000.txt");
                 run = false;
@@ -213,11 +228,26 @@ int main(){
                     break;
                 }
             }
+            int kriterijus;
+            while(true)
+            {
+                std::cout << "Pagal ka rikiuoti? " << std::endl;
+                std::cout << " 1 - varda " << std::endl;
+                std::cout << " 2 - pavarde " << std::endl;
+                std::cout << " 3 - Galutni (vidurkis) " << std::endl;
+                std::cout << " 4 - Galutini (mediana) " << std:: endl;
+                std::cin >> kriterijus;
+                if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
+                {
+                    break;
+                }
+                std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+            }
             failoGeneravimas(kiekis);
             skaitymas(A, "studentai" + std::to_string(kiekis) + ".txt");
             StudentuPadalinimas(A, vargsai, kietekai);
-            rikiavimas(vargsai);
-            rikiavimas(kietekai);
+            rikiavimas(vargsai, kriterijus);
+            rikiavimas(kietekai, kriterijus);
             atskiriFailai("studentai" + std::to_string(kiekis) + ".txt", vargsai, kietekai);
             break;
             }
@@ -239,6 +269,26 @@ int main(){
                 {
                     tyrimasPirmas();
                 }
+                else
+                {
+                    int kriterijus;
+                    while(true)
+                    {
+                        std::cout << "Pagal ka rikiuoti? " << std::endl;
+                        std::cout << " 1 - varda " << std::endl;
+                        std::cout << " 2 - pavarde " << std::endl;
+                        std::cout << " 3 - Galutni (vidurkis) " << std::endl;
+                        std::cout << " 4 - Galutini (mediana) " << std:: endl;
+                        std::cin >> kriterijus;
+                        if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
+                        {
+                            break;
+                        }
+                        std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+                    }
+                    tyrimasAntras(A, vargsai, kietekai, kriterijus);
+                }
+
 
                 break;
 

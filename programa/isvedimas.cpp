@@ -11,23 +11,9 @@
 
 
 
-void rikiavimas(std::vector<studentas>& A)
+void rikiavimas(std::vector<studentas>& A, int kriterijus)
 {
-    int kriterijus;
-    while(true)
-    {
-        std::cout << "Pagal ka rikiuoti? " << std::endl;
-        std::cout << " 1 - varda " << std::endl;
-        std::cout << " 2 - pavarde " << std::endl;
-        std::cout << " 3 - Galutni (vidurkis) " << std::endl;
-        std::cout << " 4 - Galutini (mediana) " << std:: endl;
-        std::cin >> kriterijus;
-        if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
-        {
-            break;
-        }
-        std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
-    }
+    
     switch(kriterijus)
     {
         case 1: 
@@ -189,7 +175,7 @@ void failoGeneravimas(int studKiekis) {
 
 }
 
-void StudentuPadalinimas(const std::vector<studentas>& A, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai)
+void StudentuPadalinimas(const std::vector<studentas>& A, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai, int kriterijus)
 {
     for(const auto& s : A)
     {
@@ -202,8 +188,8 @@ void StudentuPadalinimas(const std::vector<studentas>& A, std::vector<studentas>
             kietekai.push_back(s);
         }
     }
-    rikiavimas(vargsai);
-    rikiavimas(kietekai);
+    rikiavimas(vargsai, kriterijus);
+    rikiavimas(kietekai, kriterijus);
 
 }
 
@@ -258,7 +244,7 @@ void tyrimasPirmas()
     }
 }
 
-void tyrimasAntras()
+void tyrimasAntras(std::vector<studentas>& A, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai, int kriterijus)
 {
     std::vector<int> studKiekis = {1000, 10000, 100000, 1000000, 10000000};
 
@@ -266,14 +252,34 @@ void tyrimasAntras()
     {
         std::vector<studentas> stud;
         stud.reserve(x);
-        
+        //nuskaitymas
         auto start1 = std::chrono::high_resolution_clock::now();
-
         skaitymas(stud, "studentai" + std::to_string(x) + ".txt");
-
         auto end1 = std::chrono::high_resolution_clock::now();
 
         std::chrono::duration<double> diff1 = end1 - start1;
+
+        //rikiavimas
+        auto start2 = std::chrono::high_resolution_clock::now();
+        StudentuPadalinimas(A, vargsai, kietekai);
+        auto end2 = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff2 = end2 - start2;
+
+        //i atskirus failus
+        auto start3 = std::chrono::high_resolution_clock::now();
+        atskiriFailai("studentai" + std::to_string(x) + ".txt", vargsai, kietekai);
+        auto end3 = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff3 = end3 - start3;
+
+        //bendras
+        double visas = diff1.count() + diff2.count() + diff3.count();
+
+
+
+
+
 
 
 
