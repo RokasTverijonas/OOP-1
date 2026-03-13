@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <fstream>
+#include <chrono>
 #include "skaiciavimai.h"
 #include "isvedimas.h"
 
@@ -121,7 +122,7 @@ void failoSpausdinimas(std::vector<studentas>& A)
     }
     if(isvedimas == 'e')
     {
-        std::cout << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde"
+        std::cout << std::left << std::setw(20) << "Vardas" << std::setw(25) << "Pavarde"
     << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Galutinis (Med.)" << std::endl;
 
     std::cout << "--------------------------------------------------------------" << std::endl;
@@ -129,7 +130,7 @@ void failoSpausdinimas(std::vector<studentas>& A)
     
     for(auto& s : A)
     {
-        std::cout << std::setw(10) << s.vardas << std::setw(15) << s.pavarde;
+        std::cout << std::setw(20) << s.vardas << std::setw(25) << s.pavarde;
 
         std::cout << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
         
@@ -138,7 +139,7 @@ void failoSpausdinimas(std::vector<studentas>& A)
     else
     {
         std:: ofstream failas("rezultatai.txt");
-        failas << std::left << std::setw(15) << "Vardas" << std::setw(20) << "Pavarde"
+        failas << std::left << std::setw(20) << "Vardas" << std::setw(25) << "Pavarde"
     << std::setw(20) << "Galutinis (Vid.)" << std::setw(20) << "Galutinis (Med.)" << std::endl;
 
     failas << "--------------------------------------------------------------" << std::endl;
@@ -146,7 +147,7 @@ void failoSpausdinimas(std::vector<studentas>& A)
     
     for(auto& s : A)
     {
-        failas << std::setw(15) << s.vardas << std::setw(20) << s.pavarde;
+        failas << std::setw(20) << s.vardas << std::setw(25) << s.pavarde;
 
         failas << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
         
@@ -162,24 +163,24 @@ void failoGeneravimas(int studKiekis) {
     std::string failas = "studentai" + std::to_string(studKiekis) + ".txt";
     std::ofstream out(failas);
 
-    out << std::left << std::setw(12) << "Vardas" << std::setw(12) << "Pavarde";
+    out << std::left << std::setw(20) << "Vardas" << std::setw(25) << "Pavarde";
 
-    for(int i = 1; i < pazymiuKiekis; i++)
+    for(int i = 1; i <= pazymiuKiekis; i++)
     {
-        out << std::setw(4) << "ND" + std::to_string(i);
+        out << std::setw(8) << "ND" + std::to_string(i);
     }
-    out << std::setw(6) << "Galutinis" << "\n";
+    out << std::setw(8) << "Galutinis" << "\n";
 
 
     for(int i = 1; i <= studKiekis; i++)
     {
-        out << std::left << std::setw(12) << "VardasNR" + std::to_string(i) << std::setw(12) << "PavardeNR" + std::to_string(i);
+        out << std::left << std::setw(20) << "VardasNR" + std::to_string(i) << std::setw(25) << "PavardeNR" + std::to_string(i);
 
         for(int j = 0; j < pazymiuKiekis; j++)
         {
-            out << std::setw(4) <<  (rand() % 10 + 1);
+            out << std::setw(8) <<  (rand() % 10 + 1);
         }
-        out << std::setw(6) << (rand() % 10 + 1) << "\n";
+        out << std::setw(8) << (rand() % 10 + 1) << "\n";
     }
     
     out.close();
@@ -207,17 +208,17 @@ void atskiriFailai(std::string failas, std::vector<studentas>& vargsai, std::vec
     std::ofstream vargsuf("vargsai_" + failas);
     std::ofstream kietekuf("kietekai_" + failas);
 
-    vargsuf << std::left << std::setw(12) << "Vardas" << std::setw(12) << "Pavarde"
+    vargsuf << std::left << std::setw(10) << "Vardas" << std::setw(10) << "Pavarde"
     << std::setw(20) << "Galutinis(Vid.)" << std::setw(20) << "Galutinis(Med.)" << "\n";
 
-    kietekuf << std::left << std::setw(12) << "Vardas" << std::setw(12) << "Pavarde"
+    kietekuf << std::left << std::setw(15) << "Vardas" << std::setw(20) << "Pavarde"
     << std::setw(20) << "Galutinis(Vid.)" << std::setw(20) << "Galutinis(Med.)" << "\n";
 
     for(auto& s : vargsai)
     {
         vargsuf << std::setw(15) << s.vardas << std::setw(20) << s.pavarde;
 
-        vargsuf << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
+        vargsuf << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << "\n";
         
     }
 
@@ -225,9 +226,30 @@ void atskiriFailai(std::string failas, std::vector<studentas>& vargsai, std::vec
     {
         kietekuf << std::setw(15) << s.vardas << std::setw(20) << s.pavarde;
 
-        kietekuf << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << std::endl;
+        kietekuf << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVid << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisMed << "\n";
         
     }
     
 
+}
+
+void tyrimasPirmas()
+{
+    std::vector<int> studKiekis = {1000, 10000, 100000, 1000000, 10000000};
+
+    std::cout << std::left << std::setw(22) << "Studentų skaičius" << std::setw(10) << "Laikas" << std::endl;
+
+    for(auto x : studKiekis)
+    {
+        auto start = std::chrono::high_resolution_clock::now();
+
+        failoGeneravimas(x);
+
+        auto end = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff = end - start;
+
+        std::cout << std::left << std::setw(20) << std::to_string(x) + " studentų" << std::setw(10) << diff.count() << "s" << std::endl;
+
+    }
 }

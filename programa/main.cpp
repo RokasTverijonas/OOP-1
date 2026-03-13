@@ -31,7 +31,8 @@ int main(){
         std::cout << "3 - Generuoti studentu vardus, pavardes ir pazymius; " << std::endl;
         std::cout << "4 - Skaityti informacija is failo; " << std::endl;
         std::cout << "5 - Generuoti studentų failą; " << std::endl;
-        std::cout << "6 - Baigti darbą; " << std::endl;
+        std::cout << "6 - atlikti tyrimą" << std::endl;
+        std::cout << "7 - Baigti darbą; " << std::endl;
         std::cout << " Pasirinkite ";
         int pasirinkimas;
         try{
@@ -201,20 +202,49 @@ int main(){
             }
             case 5:
             {
-            failoGeneravimas(1000);
-            failoGeneravimas(10000);
-            failoGeneravimas(100000);
-            failoGeneravimas(1000000);
-            failoGeneravimas(10000000);
-            skaitymas(A, "studentai10000.txt");
+            
+            int kiekis;
+            while(true)
+            {
+                std::cout << "Įveskite kiek studentų norite turėti faile: " << std::endl;
+                std::cin >> kiekis;
+                if(kiekis > 0)
+                {
+                    break;
+                }
+            }
+            failoGeneravimas(kiekis);
+            skaitymas(A, "studentai" + std::to_string(kiekis) + ".txt");
             StudentuPadalinimas(A, vargsai, kietekai);
-            atskiriFailai("studentai10000.txt", vargsai, kietekai);
-
-
+            rikiavimas(vargsai);
+            rikiavimas(kietekai);
+            atskiriFailai("studentai" + std::to_string(kiekis) + ".txt", vargsai, kietekai);
             break;
             }
-            
+
             case 6:
+            {
+                int tyrimas;
+                while(true)
+                {
+                    std::cout << "Kurį tyrimą norite atlikti (1 arba 2): " <<std::endl;
+                    std::cin >> tyrimas;
+                    if(tyrimas == 1 || tyrimas == 2)
+                    {
+                        break;
+                    }
+                }
+
+                if(tyrimas == 1)
+                {
+                    tyrimasPirmas();
+                }
+
+                break;
+
+            }
+            
+            case 7:
             {
                 spausdinimas(A);
                 run = false;
