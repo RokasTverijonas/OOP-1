@@ -4,8 +4,10 @@
 #include <iomanip>
 #include <fstream>
 #include <chrono>
+#include "studentas.h"
 #include "skaiciavimai.h"
 #include "isvedimas.h"
+#include "skaitymas.h"
 
 
 
@@ -200,6 +202,8 @@ void StudentuPadalinimas(const std::vector<studentas>& A, std::vector<studentas>
             kietekai.push_back(s);
         }
     }
+    rikiavimas(vargsai);
+    rikiavimas(kietekai);
 
 }
 
@@ -250,6 +254,28 @@ void tyrimasPirmas()
         std::chrono::duration<double> diff = end - start;
 
         std::cout << std::left << std::setw(20) << std::to_string(x) + " studentų" << std::setw(10) << diff.count() << "s" << std::endl;
+
+    }
+}
+
+void tyrimasAntras()
+{
+    std::vector<int> studKiekis = {1000, 10000, 100000, 1000000, 10000000};
+
+    for(auto x : studKiekis)
+    {
+        std::vector<studentas> stud;
+        stud.reserve(x);
+        
+        auto start1 = std::chrono::high_resolution_clock::now();
+
+        skaitymas(stud, "studentai" + std::to_string(x) + ".txt");
+
+        auto end1 = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff1 = end1 - start1;
+
+
 
     }
 }
