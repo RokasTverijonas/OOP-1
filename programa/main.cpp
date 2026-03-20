@@ -2,11 +2,9 @@
 #include <ctime>
 #include <cstdlib>
 #include <stdexcept>
-#include <windows.h>
+#include "funkcijos.h"
 #include "studentas.h"
-#include "skaiciavimai.h"
-#include "skaitymas.h"
-#include "isvedimas.h"
+
 
 const std::vector<std::string> vardai = {"Rokas", "Dziugas", "Kajus", "Dovydas", "Matas", "Simonas", "Mantas", "Kasparas", "Tomas", "Kristupas"};
 const std::vector<std::string> pavardes = {"Brazdeikis" , "Kazlauskas", "Macijauskas", "Sabonis", "Valanciunas", "Tubelis", "Sirvydis", "Ulanovas", "Giedraitis", "Kalnietis"};
@@ -14,8 +12,6 @@ const std::vector<std::string> pavardes = {"Brazdeikis" , "Kazlauskas", "Macijau
 
 int main(){
     
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
     std::vector<studentas> A;
     std::vector<studentas> vargsai;
     std::vector<studentas> kietekai;
@@ -41,9 +37,9 @@ int main(){
             {
                 throw std::invalid_argument("Įvestis nėra sveikasis skaičius. ");
             }
-            if(pasirinkimas < 1 || pasirinkimas > 6) 
+            if(pasirinkimas < 1 || pasirinkimas > 7) 
             {
-                throw std::out_of_range("Pasirinkimas už leistino intervalo (1-5) ribų");
+                throw std::out_of_range("Pasirinkimas už leistino intervalo (1-7) ribų");
             }
         } catch(std::exception& e) {
             std::cout << "Klaida: " << e.what() << std::endl;
@@ -211,7 +207,7 @@ int main(){
                 }
                 rikiavimas(A,kriterijus);
                 failoSpausdinimas(A);
-                skaitymoTestai(A, "studentai1000000.txt");
+                //skaitymoTestai(A, "studentai1000000.txt");
                 run = false;
                 break;
             }

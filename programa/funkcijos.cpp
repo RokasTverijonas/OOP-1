@@ -5,12 +5,126 @@
 #include <fstream>
 #include <chrono>
 #include "studentas.h"
-#include "skaiciavimai.h"
-#include "isvedimas.h"
-#include "skaitymas.h"
+#include "funkcijos.h"
 
 
 
+
+void skaitymas(std::vector<studentas>& A, std::string failas)
+{
+    std::ifstream input(failas);
+
+    if(!input.is_open())
+    {
+        throw std::runtime_error("Pasirinkto failo nepavyko atidaryti!");
+    }
+    std::string eilute;
+
+    getline(input, eilute);
+
+    while(getline(input, eilute))
+    {
+        std::stringstream ss(eilute);
+        studentas s;
+        ss >> s.vardas >> s.pavarde;
+
+        std::vector<int> pazymiai;
+        int x;
+        while(ss >> x)
+        {
+            pazymiai.push_back(x);
+        }
+
+        s.egzaminas = pazymiai.back();
+        pazymiai.pop_back();
+
+
+        s.nd = pazymiai;
+        s.galutinisVid = galutinis(s, vidurkis(s));
+        s.galutinisMed = galutinis(s, mediana(s));
+
+        A.push_back(s);
+    }
+}
+
+/*
+void skaitymoTestai(std::vector<studentas>& A, std::string failas)
+{
+    int kartai = 5;
+    double bendras = 0.0;
+    
+    while(true)
+    {
+        std::cout << "Kuri faila nuskaityti testavimui?" << std::endl;
+        std::cin >> failas;
+        if(failas == "kursiokai.txt" || failas == "studentai10000.txt" || failas == "studentai100000.txt" || failas == "studentai1000000.txt")
+        {
+            break;
+        }
+        std::cout << "Bandykite ivest dar karta! " << std::endl;
+    }
+
+    for(int i = 0; i < kartai; i++)
+    {
+        A.clear();
+        auto start = std::chrono::steady_clock::now();
+
+        skaitymas(A, failas);
+
+        auto end = std::chrono::steady_clock::now();
+
+        std::chrono::duration<double> diff = end - start;
+        bendras += diff.count();
+    }
+
+    std::cout << "failo " << failas << " nuskaitymo vidurkis: " << bendras / kartai << "s." << std::endl;
+}
+    */
+
+double vidurkis(const studentas& A)
+{
+    if(A.nd.empty())
+    {
+        return 0.0;
+    }
+
+    double suma = 0;
+
+    for(int x : A.nd)
+    {
+        suma += x;
+    }
+    double vidurkis = suma / A.nd.size();
+
+    return vidurkis;
+}
+
+double mediana(const studentas& A)
+{
+    if(A.nd.empty())
+    {
+        return 0.0;
+    }
+    std::vector<int> temp = A.nd;
+    std::sort(temp.begin(), temp.end());
+
+    int n = temp.size(); 
+
+    if(n % 2 == 0)
+    {
+        return (temp[n / 2] + temp[(n - 1) / 2]) / 2.0;
+    }
+    else
+    {
+        return temp[n/2];
+    }
+
+}
+
+double galutinis(const studentas& A, double balai)
+{
+    return 0.4 * balai + 0.6 * A.egzaminas;
+}
 void rikiavimas(std::vector<studentas>& A, int kriterijus)
 {
     
