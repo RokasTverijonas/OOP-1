@@ -64,42 +64,30 @@ template<typename konteineris>
 void rikiavimas(konteineris& A, int kriterijus)
 {
     
+    auto byVardas = [](const studentas& a, const studentas& b)
+    {
+        return a.vardas < b.vardas;
+    };
+    auto byPavarde = [](const studentas& a, const studentas& b)
+    {
+        return a.pavarde < b.pavarde;
+    };
+    auto byGalVid = [](const studentas& a, const studentas& b)
+    {
+        return a.galutinisVid < b.galutinisVid;
+    };
+    auto byGalMed = [](const studentas& a, const studentas& b)
+    {
+        return a.galutinisMed < b.galutinisMed;
+    };
+    
+    
     switch(kriterijus)
     {
-        case 1: 
-        {
-            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
-        {
-            return a.vardas < b.vardas;
-        });
-        break;
-        }
-        case 2:
-        {
-            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
-        {
-            return a.pavarde < b.pavarde;
-        });
-        break;
-        }
-        case 3:
-        {
-            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
-        {
-            return a.galutinisVid < b.galutinisVid;
-        });
-        break;
-        }
-        case 4:
-        {
-            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
-        {
-            return a.galutinisMed < b.galutinisMed;
-        });
-        break;
-        }
-
-
+        case 1: std::sort(A.begin(), A.end(), byVardas); break;
+        case 2: std::sort(A.begin(), A.end(), byPavarde); break;
+        case 3: std::sort(A.begin(), A.end(), byGalVid); break;
+        case 4: std::sort(A.begin(), A.end(), byGalMed); break;
     }
 
 }
