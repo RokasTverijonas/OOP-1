@@ -9,6 +9,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <algorithm>
+#include <list>
+#include <deque>
 
 
 
@@ -80,15 +82,30 @@ void rikiavimas(konteineris& A, int kriterijus)
     {
         return a.galutinisMed < b.galutinisMed;
     };
-    
-    
-    switch(kriterijus)
+
+    //Listo rikiavimas
+    if constexpr (std::is_same_v<konteineris, std::list<studentas>>)
     {
-        case 1: std::sort(A.begin(), A.end(), byVardas); break;
-        case 2: std::sort(A.begin(), A.end(), byPavarde); break;
-        case 3: std::sort(A.begin(), A.end(), byGalVid); break;
-        case 4: std::sort(A.begin(), A.end(), byGalMed); break;
+        switch(kriterijus)
+        {
+            case 1: A.sort(byVardas); break;
+            case 2: A.sort(byPavarde); break;
+            case 3: A.sort(byGalVid); break;
+            case 4: A.sort(byGalMed); break;
+        }
     }
+    //Vector arba deque rikiavimas
+    else
+    {
+        switch(kriterijus)
+        {
+            case 1: std::sort(A.begin(), A.end(), byVardas); break;
+            case 2: std::sort(A.begin(), A.end(), byPavarde); break;
+            case 3: std::sort(A.begin(), A.end(), byGalVid); break;
+            case 4: std::sort(A.begin(), A.end(), byGalMed); break;
+        }   
+    }
+    
 
 }
 
