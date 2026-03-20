@@ -2,21 +2,125 @@
 #define FUNKCIJOS_H
 
 #include "studentas.h"
+#include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
+#include <algorithm>
 
-void skaitymas(std::vector<studentas>& A, std::string failas);
+
+
 double vidurkis(const studentas& A);
 double mediana(const studentas& A);
 double galutinis(const studentas& A, double balai);
-void rikiavimas(std::vector<studentas>& A, int kriterijus);
 void spausdinimas(std::vector<studentas>& A);
 void failoSpausdinimas(std::vector<studentas>& A);
 void failoGeneravimas(int studKiekis);
-void StudentuPadalinimas(const std::vector<studentas>& A, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai, int kriterijus);
 void atskiriFailai(std::string failas, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai);
 void tyrimasPirmas();
 void tyrimasAntras(std::vector<studentas>& A, std::vector<studentas>& vargsai, std::vector<studentas>& kietekai, int kriterijus);
 
+template<typename konteineris> 
+void skaitymas(konteineris& A, std::string failas)
+{
+    std::ifstream input(failas);
+
+    if(!input.is_open())
+    {
+        throw std::runtime_error("Pasirinkto failo nepavyko atidaryti!");
+    }
+    std::string eilute;
+
+    getline(input, eilute);
+
+    while(getline(input, eilute))
+    {
+        std::stringstream ss(eilute);
+        studentas s;
+        ss >> s.vardas >> s.pavarde;
+
+        std::vector<int> pazymiai;
+        int x;
+        while(ss >> x)
+        {
+            pazymiai.push_back(x);
+        }
+
+        s.egzaminas = pazymiai.back();
+        pazymiai.pop_back();
+
+
+        s.nd = pazymiai;
+        s.galutinisVid = galutinis(s, vidurkis(s));
+        s.galutinisMed = galutinis(s, mediana(s));
+
+        A.push_back(s);
+    }
+}
+
+template<typename konteineris>
+void rikiavimas(konteineris& A, int kriterijus)
+{
+    
+    switch(kriterijus)
+    {
+        case 1: 
+        {
+            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
+        {
+            return a.vardas < b.vardas;
+        });
+        break;
+        }
+        case 2:
+        {
+            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
+        {
+            return a.pavarde < b.pavarde;
+        });
+        break;
+        }
+        case 3:
+        {
+            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
+        {
+            return a.galutinisVid < b.galutinisVid;
+        });
+        break;
+        }
+        case 4:
+        {
+            std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b)
+        {
+            return a.galutinisMed < b.galutinisMed;
+        });
+        break;
+        }
+
+
+    }
+
+}
+
+template<typename konteineris>
+void StudentuPadalinimas(const konteineris& A, konteineris& vargsai, konteineris& kietekai, int kriterijus)
+{
+    for(const auto& s : A)
+    {
+        if(s.galutinisVid < 5.0)
+        {
+            vargsai.push_back(s);
+        }
+        else
+        {
+            kietekai.push_back(s);
+        }
+    }
+    rikiavimas(vargsai, kriterijus);
+    rikiavimas(kietekai, kriterijus);
+
+}
 
 #endif
