@@ -2,6 +2,8 @@
 #include <ctime>
 #include <cstdlib>
 #include <stdexcept>
+#include <list>
+#include <deque>
 #include "funkcijos.h"
 #include "studentas.h"
 
@@ -27,8 +29,9 @@ int main(){
         std::cout << "3 - Generuoti studentu vardus, pavardes ir pazymius; " << std::endl;
         std::cout << "4 - Skaityti informacija is failo; " << std::endl;
         std::cout << "5 - Generuoti studentų failą; " << std::endl;
-        std::cout << "6 - atlikti tyrimą" << std::endl;
-        std::cout << "7 - Baigti darbą; " << std::endl;
+        std::cout << "6 - atlikti tyrimą pirma arba antra tyrima" << std::endl;
+        std::cout << "7 - Atlikti tyrima su skirtingais konteineriais" << std::endl;
+        std::cout << "8 - Baigti darbą; " << std::endl;
         std::cout << " Pasirinkite ";
         int pasirinkimas;
         try{
@@ -37,7 +40,7 @@ int main(){
             {
                 throw std::invalid_argument("Įvestis nėra sveikasis skaičius. ");
             }
-            if(pasirinkimas < 1 || pasirinkimas > 7) 
+            if(pasirinkimas < 1 || pasirinkimas > 8) 
             {
                 throw std::out_of_range("Pasirinkimas už leistino intervalo (1-7) ribų");
             }
@@ -287,8 +290,61 @@ int main(){
                 break;
 
             }
-            
             case 7:
+            {
+                
+                
+                char kontPasirinkimas;
+                while(true)
+                {
+                    std::cout <<"Pasirinkite konteinerio tipa: " << std::endl;
+                    std::cout << "v - vector, l - list, d - deque" << std::endl;
+                    std::cin >> kontPasirinkimas;
+                    kontPasirinkimas = tolower(kontPasirinkimas);
+                    if(kontPasirinkimas == 'v' || kontPasirinkimas == 'l' || kontPasirinkimas == 'd')
+                    {
+                        break;
+                    }
+                    std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+                }
+                int kriterijus;
+                while(true)
+                {
+                    std::cout << "Pagal ka rikiuoti? " << std::endl;
+                    std::cout << " 1 - varda " << std::endl;
+                    std::cout << " 2 - pavarde " << std::endl;
+                    std::cout << " 3 - Galutni (vidurkis) " << std::endl;
+                    std::cout << " 4 - Galutini (mediana) " << std:: endl;
+                    std::cin >> kriterijus;
+                    if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
+                    {
+                        break;
+                    }
+                    std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
+                }
+                if(kontPasirinkimas == 'v')
+                {
+                    KonteineriuTyrimas(A, vargsai, kietekai, kriterijus);
+                }
+                else if(kontPasirinkimas == 'l')
+                {
+                    std::list<studentas> A_list;
+                    std::list<studentas> vargsai_list;
+                    std::list<studentas> kietekai_list;
+                    KonteineriuTyrimas(A_list, vargsai_list, kietekai_list, kriterijus);
+                }
+                else
+                {
+                    std::deque<studentas> A_deque;
+                    std::deque<studentas> vargsai_deque;
+                    std::deque<studentas> kietekai_deque;
+                    KonteineriuTyrimas(A_deque, vargsai_deque, kietekai_deque, kriterijus);
+                }
+
+                break;
+            }
+            
+            case 8:
             {
                 spausdinimas(A);
                 run = false;

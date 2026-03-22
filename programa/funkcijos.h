@@ -11,6 +11,8 @@
 #include <algorithm>
 #include <list>
 #include <deque>
+#include <chrono>
+#include <iomanip>
 
 
 
@@ -123,9 +125,55 @@ void StudentuPadalinimas(const konteineris& A, konteineris& vargsai, konteineris
             kietekai.push_back(s);
         }
     }
-    rikiavimas(vargsai, kriterijus);
-    rikiavimas(kietekai, kriterijus);
 
+}
+
+template<typename konteineris>
+void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kietekai, int kriterijus)
+{
+    std::vector<int> studKiekis = {1000, 10000, 100000, 1000000, 10000000};
+
+    std::cout << std::left << std::setw(12) << "Studentai" << std::setw(15) << "Skaitymas"
+    << std::setw(15) << "Rikiavimas" << std::setw(15) << "skirstymas" 
+    << std::setw(15) << "Bendras laikas" << std::endl;
+
+
+    for(auto x : studKiekis)
+    {
+        //nuskaitymas
+        auto start1 = std::chrono::high_resolution_clock::now();
+        skaitymas(A, "studentai" + std::to_string(x) + ".txt");
+        auto end1 = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff1 = end1 - start1;
+
+        //rikiavimas
+        auto start2 = std::chrono::high_resolution_clock::now();
+        rikiavimas(A, kriterijus);
+        auto end2 = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff2 = end2 - start2;
+
+        //i atskirus failus
+        auto start3 = std::chrono::high_resolution_clock::now();
+        StudentuPadalinimas(A, vargsai, kietekai, kriterijus);
+        auto end3 = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff3 = end3 - start3;
+
+        //bendras
+        double visas = diff1.count() + diff2.count() + diff3.count();
+
+        std::cout << std::left << std::setw(12) << x << std::setw(15) << diff1.count()
+        << std::setw(15) << diff2.count() << std::setw(15) << diff3.count() 
+        << std::setw(15) << visas << std::endl;
+
+        A.clear();
+        vargsai.clear();
+        kietekai.clear();
+
+
+    }
 }
 
 #endif
