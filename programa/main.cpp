@@ -20,6 +20,7 @@ int main(){
     srand(time(NULL));
     bool run = true;
     int auto_kiekis = -1;
+    int kiekis = 0;
 
     while(run)
     {
@@ -29,9 +30,10 @@ int main(){
         std::cout << "3 - Generuoti studentu vardus, pavardes ir pazymius; " << std::endl;
         std::cout << "4 - Skaityti informacija is failo; " << std::endl;
         std::cout << "5 - Generuoti studentų failą; " << std::endl;
-        std::cout << "6 - atlikti tyrimą pirma arba antra tyrima" << std::endl;
-        std::cout << "7 - Atlikti tyrima su skirtingais konteineriais" << std::endl;
-        std::cout << "8 - Baigti darbą; " << std::endl;
+        std::cout << "6 - Rusiuoti studentus i vargsus ir kietekus; " << std::endl;
+        std::cout << "7 - atlikti tyrimą pirma arba antra tyrima" << std::endl;
+        std::cout << "8 - Atlikti tyrima su skirtingais konteineriais" << std::endl;
+        std::cout << "9 - Baigti darbą; " << std::endl;
         std::cout << " Pasirinkite ";
         int pasirinkimas;
         try{
@@ -40,7 +42,7 @@ int main(){
             {
                 throw std::invalid_argument("Įvestis nėra sveikasis skaičius. ");
             }
-            if(pasirinkimas < 1 || pasirinkimas > 8) 
+            if(pasirinkimas < 1 || pasirinkimas > 9) 
             {
                 throw std::out_of_range("Pasirinkimas už leistino intervalo (1-7) ribų");
             }
@@ -217,39 +219,44 @@ int main(){
             case 5:
             {
             
-            int kiekis;
-            while(true)
-            {
-                std::cout << "Įveskite kiek studentų norite turėti faile: " << std::endl;
-                std::cin >> kiekis;
-                if(kiekis > 0)
+                while(true)
                 {
-                    break;
+                    std::cout << "Įveskite kiek studentų norite turėti faile: " << std::endl;
+                    std::cin >> kiekis;
+                    if(kiekis > 0)
+                    {
+                        break;
+                    }
                 }
+                failoGeneravimas(kiekis);
+                break;
             }
-            int kriterijus;
-            while(true)
+            case 6:
             {
-                std::cout << "Pagal ka rikiuoti? " << std::endl;
-                std::cout << " 1 - varda " << std::endl;
-                std::cout << " 2 - pavarde " << std::endl;
-                std::cout << " 3 - Galutni (vidurkis) " << std::endl;
-                std::cout << " 4 - Galutini (mediana) " << std:: endl;
-                std::cin >> kriterijus;
-                if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
+                int kriterijus;
+                while(true)
                 {
-                    break;
+                    std::cout << "Pagal ka rikiuoti? " << std::endl;
+                    std::cout << " 1 - varda " << std::endl;
+                    std::cout << " 2 - pavarde " << std::endl;
+                    std::cout << " 3 - Galutni (vidurkis) " << std::endl;
+                    std::cout << " 4 - Galutini (mediana) " << std:: endl;
+                    std::cin >> kriterijus;
+                    if(kriterijus == 1 || kriterijus == 2 || kriterijus == 3 || kriterijus == 4)
+                    {
+                        break;
+                    }
+                    std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
                 }
-                std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
-            }
-            failoGeneravimas(kiekis);
-            skaitymas(A, "studentai" + std::to_string(kiekis) + ".txt");
-            StudentuPadalinimas(A, vargsai, kietekai, kriterijus);
-            atskiriFailai("studentai" + std::to_string(kiekis) + ".txt", vargsai, kietekai);
-            break;
+                skaitymas(A, "studentai" + std::to_string(kiekis) + ".txt");
+                StudentuPadalinimas(A, vargsai, kietekai, kriterijus);
+                rikiavimas(vargsai, kriterijus);
+                rikiavimas(kietekai, kriterijus);
+                atskiriFailai("studentai" + std::to_string(kiekis) + ".txt",vargsai, kietekai);
+                break;
             }
 
-            case 6:
+            case 7:
             {
                 int tyrimas;
                 while(true)
@@ -290,7 +297,7 @@ int main(){
                 break;
 
             }
-            case 7:
+            case 8:
             {
                 
                 
@@ -344,7 +351,7 @@ int main(){
                 break;
             }
             
-            case 8:
+            case 9:
             {
                 spausdinimas(A);
                 run = false;

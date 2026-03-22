@@ -132,6 +132,7 @@ template<typename konteineris>
 void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kietekai, int kriterijus)
 {
     std::vector<int> studKiekis = {1000, 10000, 100000, 1000000, 10000000};
+    A.clear();
 
     std::cout << std::left << std::setw(12) << "Studentai" << std::setw(15) << "Skaitymas"
     << std::setw(15) << "Rikiavimas" << std::setw(15) << "skirstymas" 
