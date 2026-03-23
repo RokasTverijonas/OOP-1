@@ -249,7 +249,7 @@ int main(){
                     std::cout << "Ivedete neteisingai, bandykite dar karta! " << std::endl;
                 }
                 skaitymas(A, "studentai" + std::to_string(kiekis) + ".txt");
-                StudentuPadalinimas(A, vargsai, kietekai, kriterijus);
+                StudentuPadalinimas(A, vargsai, kietekai);
                 rikiavimas(vargsai, kriterijus);
                 rikiavimas(kietekai, kriterijus);
                 atskiriFailai("studentai" + std::to_string(kiekis) + ".txt",vargsai, kietekai);

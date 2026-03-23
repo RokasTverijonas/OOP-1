@@ -282,7 +282,7 @@ void tyrimasAntras(std::vector<studentas>& A, std::vector<studentas>& vargsai, s
 
         //rikiavimas
         auto start2 = std::chrono::high_resolution_clock::now();
-        StudentuPadalinimas(stud, vargsai, kietekai, kriterijus);
+        StudentuPadalinimas(stud, vargsai, kietekai);
         auto end2 = std::chrono::high_resolution_clock::now();
 
         std::chrono::duration<double> diff2 = end2 - start2;

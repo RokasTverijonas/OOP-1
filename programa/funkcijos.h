@@ -112,7 +112,7 @@ void rikiavimas(konteineris& A, int kriterijus)
 }
 
 template<typename konteineris>
-void StudentuPadalinimas(const konteineris& A, konteineris& vargsai, konteineris& kietekai, int kriterijus)
+void StudentuPadalinimas(const konteineris& A, konteineris& vargsai, konteineris& kietekai)
 {
     for(const auto& s : A)
     {
@@ -154,9 +154,9 @@ void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kiete
 
         std::chrono::duration<double> diff2 = end2 - start2;
 
-        //i atskirus failus
+        //padalinimas
         auto start3 = std::chrono::high_resolution_clock::now();
-        StudentuPadalinimas(A, vargsai, kietekai, kriterijus);
+        StudentuPadalinimas(A, vargsai, kietekai);
         auto end3 = std::chrono::high_resolution_clock::now();
 
         std::chrono::duration<double> diff3 = end3 - start3;
