@@ -132,7 +132,7 @@ void StudentuPadalinimas( konteineris& A, konteineris& vargsai, konteineris& kie
 template<typename konteineris>
 void StudentuPadalinimas2(konteineris& A, konteineris& vargsai)
 {
-    auto& it = A.begin();
+    auto it = A.begin();
 
     while(it != A.end())
     {
@@ -149,8 +149,13 @@ void StudentuPadalinimas2(konteineris& A, konteineris& vargsai)
     }
 }
 
+/*3 strategija
 template<typename konteineris>
-void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kietekai, int kriterijus)
+void StudentuPadalinimas3()
+*/
+
+template<typename konteineris>
+void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kietekai, int kriterijus, int strategija)
 {
     std::vector<int> studKiekis = {1000, 10000, 100000, 1000000, 10000000};
 
@@ -177,7 +182,14 @@ void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kiete
 
         //padalinimas
         auto start3 = std::chrono::high_resolution_clock::now();
-        StudentuPadalinimas(A, vargsai, kietekai);
+        if(strategija == 1)
+        {
+            StudentuPadalinimas(A, vargsai, kietekai);
+        }
+        else if(strategija == 2)
+        {
+            StudentuPadalinimas2(A, vargsai);
+        }
         auto end3 = std::chrono::high_resolution_clock::now();
 
         std::chrono::duration<double> diff3 = end3 - start3;

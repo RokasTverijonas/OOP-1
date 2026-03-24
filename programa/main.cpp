@@ -31,8 +31,8 @@ int main(){
         std::cout << "4 - Skaityti informacija is failo; " << std::endl;
         std::cout << "5 - Generuoti studentų failą; " << std::endl;
         std::cout << "6 - Rusiuoti studentus i vargsus ir kietekus; " << std::endl;
-        std::cout << "7 - atlikti tyrimą pirma arba antra tyrima" << std::endl;
-        std::cout << "8 - Atlikti tyrima su skirtingais konteineriais" << std::endl;
+        std::cout << "7 - atlikti pirmą arba antrą tyrimą" << std::endl;
+        std::cout << "8 - Atlikti tyrima su skirtingais konteineriais"<< std::endl;
         std::cout << "9 - Baigti darbą; " << std::endl;
         std::cout << " Pasirinkite ";
         int pasirinkimas;
@@ -299,8 +299,21 @@ int main(){
             }
             case 8:
             {
+                int strategija;
+                while(true)
+                {
+                    std::cout << "Pasirinkite strategija (1, 2 arba 3): " << std::endl;
+                    std::cin >> strategija;
+                    if(strategija == 1 || strategija == 2)
+                    {
+                        break;
+                    }
+                    std::cin.clear();
+                    std::cin.ignore(100000, '\n');
+                }
                 
-                
+
+
                 char kontPasirinkimas;
                 while(true)
                 {
@@ -331,21 +344,21 @@ int main(){
                 }
                 if(kontPasirinkimas == 'v')
                 {
-                    KonteineriuTyrimas(A, vargsai, kietekai, kriterijus);
+                    KonteineriuTyrimas(A, vargsai, kietekai, kriterijus, strategija);
                 }
                 else if(kontPasirinkimas == 'l')
                 {
                     std::list<studentas> A_list;
                     std::list<studentas> vargsai_list;
                     std::list<studentas> kietekai_list;
-                    KonteineriuTyrimas(A_list, vargsai_list, kietekai_list, kriterijus);
+                    KonteineriuTyrimas(A_list, vargsai_list, kietekai_list, kriterijus, strategija);
                 }
                 else
                 {
                     std::deque<studentas> A_deque;
                     std::deque<studentas> vargsai_deque;
                     std::deque<studentas> kietekai_deque;
-                    KonteineriuTyrimas(A_deque, vargsai_deque, kietekai_deque, kriterijus);
+                    KonteineriuTyrimas(A_deque, vargsai_deque, kietekai_deque, kriterijus, strategija);
                 }
 
                 break;
