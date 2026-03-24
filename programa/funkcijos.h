@@ -206,6 +206,10 @@ void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kiete
         {
             StudentuPadalinimas2(A, vargsai);
         }
+        else if(strategija == 3)
+        {
+            StudentuPadalinimas3(A, vargsai);
+        }
         auto end3 = std::chrono::high_resolution_clock::now();
 
         std::chrono::duration<double> diff3 = end3 - start3;

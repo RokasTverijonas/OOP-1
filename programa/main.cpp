@@ -305,7 +305,7 @@ int main(){
                 {
                     std::cout << "Pasirinkite strategija (1, 2 arba 3): " << std::endl;
                     std::cin >> strategija;
-                    if(strategija == 1 || strategija == 2)
+                    if(strategija == 1 || strategija == 2 || strategija == 3)
                     {
                         break;
                     }
