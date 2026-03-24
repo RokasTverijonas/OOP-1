@@ -111,8 +111,9 @@ void rikiavimas(konteineris& A, int kriterijus)
 
 }
 
+//1 strategija
 template<typename konteineris>
-void StudentuPadalinimas(const konteineris& A, konteineris& vargsai, konteineris& kietekai)
+void StudentuPadalinimas( konteineris& A, konteineris& vargsai, konteineris& kietekai)
 {
     for(const auto& s : A)
     {
@@ -126,6 +127,26 @@ void StudentuPadalinimas(const konteineris& A, konteineris& vargsai, konteineris
         }
     }
 
+}
+//2 strategija
+template<typename konteineris>
+void StudentuPadalinimas2(konteineris& A, konteineris& vargsai)
+{
+    auto& it = A.begin();
+
+    while(it != A.end())
+    {
+        if(it->galutinisVid < 5.0)
+        {
+            vargsai.push_back(*it);
+            it = A.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+
+    }
 }
 
 template<typename konteineris>
