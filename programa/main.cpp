@@ -33,7 +33,8 @@ int main(){
         std::cout << "6 - Rusiuoti studentus i vargsus ir kietekus; " << std::endl;
         std::cout << "7 - atlikti pirmą arba antrą tyrimą" << std::endl;
         std::cout << "8 - Atlikti tyrima su skirtingais konteineriais"<< std::endl;
-        std::cout << "9 - Baigti darbą; " << std::endl;
+        std::cout << "9 - Spausdinti" << std::endl;
+        std::cout << "10 - Baigti darbą; " << std::endl;
         std::cout << " Pasirinkite ";
         int pasirinkimas;
         try{
@@ -367,6 +368,10 @@ int main(){
             case 9:
             {
                 spausdinimas(A);
+                break;
+            }
+            case 10:
+            {
                 run = false;
                 break;
             }

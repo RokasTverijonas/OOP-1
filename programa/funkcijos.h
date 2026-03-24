@@ -62,6 +62,7 @@ void skaitymas(konteineris& A, std::string failas)
 
         A.push_back(s);
     }
+    input.close();
 }
 
 template<typename konteineris>
@@ -149,10 +150,21 @@ void StudentuPadalinimas2(konteineris& A, konteineris& vargsai)
     }
 }
 
-/*3 strategija
+//3 strategija
 template<typename konteineris>
-void StudentuPadalinimas3()
-*/
+void StudentuPadalinimas3(konteineris& A, konteineris& vargsai)
+{
+    //grazina iteratoriu it, kuris rodo i antro bloko pirma elementa, kuris pagal partition ir musu salyga buvo false
+    //konteineris lieka isdeliotas taip: pirmi elementai tie, kurie tenkina salyga, tada po ju eina visi like
+    auto it = std::partition(A.begin(), A.end(), [](const studentas& a) { return a.galutinisVid >= 5.0; });
+
+    //sudeda elementus nuo konteinerio A iteratoriaus iki konteinerio pabaigos i vargsai konteineri
+    vargsai.insert(vargsai.begin(), it, A.end());
+    //istrina A konteinerio elementus nuo iteratoriaus iki konteinerio pabaigos
+    A.erase(it, A.end());
+
+}
+
 
 template<typename konteineris>
 void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kietekai, int kriterijus, int strategija)
@@ -166,6 +178,10 @@ void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kiete
 
     for(auto x : studKiekis)
     {
+        A.clear();
+        vargsai.clear();
+        kietekai.clear();
+        
         //nuskaitymas
         auto start1 = std::chrono::high_resolution_clock::now();
         skaitymas(A, "studentai" + std::to_string(x) + ".txt");
@@ -201,13 +217,11 @@ void KonteineriuTyrimas(konteineris& A, konteineris& vargsai, konteineris& kiete
         << std::setw(15) << diff2.count() << std::setw(15) << diff3.count() 
         << std::setw(15) << visas << std::endl;
 
-        A.clear();
-        vargsai.clear();
-        kietekai.clear();
-
 
     }
     A.clear();
+    vargsai.clear();
+    kietekai.clear();
 }
 
 #endif
