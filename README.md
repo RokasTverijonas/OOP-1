@@ -40,10 +40,10 @@ Programa skirta studentų akademinių pasiekimų informacijos apdorojimui. Varto
 # Tyrimo rezultatai:
 
 - Šiame tyrime analizuojamas skirtingų konteinerių (vector, list, deque) efektyvumas apdorojant studentų duomenis.
-- Eksperimentuose naudojami skirtingo dydžio failai (nuo 1000 iki 10000000 studentų įrašų)
-- Pirmoje strategijoje studentai yra padalinami į du naujus konteinerius
+- Eksperimentuose naudojami skirtingo dydžio failai (nuo 1000 iki 10000000 studentų įrašų).
+- Pirmoje strategijoje studentai yra padalinami į du naujus konteinerius.
 - antroje strategijoje iš bendro studentų koneteinerio į naują konteinerį yra perkeliami tik nepažangūs studentai ir jie tuo pčaiu yra ištrinami iš pagrindinio konteinerio. Tai sutaupo atminties.
-- Trečioje strategijoje, taip pat, iš bendro studentų koneteinerio į naują konteinerį yra perkeliami tik nepažangūs studentai ir jie tuo pačiu yra ištrinami iš pagrindinio konteinerio, bet šiuo atveju yra naudojami efektyvūs algoritmai
+- Trečioje strategijoje, taip pat, iš bendro studentų koneteinerio į naują konteinerį yra perkeliami tik nepažangūs studentai ir jie tuo pačiu yra ištrinami iš pagrindinio konteinerio, bet šiuo atveju yra naudojami efektyvūs algoritmai.
 
 # 1 Strategiija
 
