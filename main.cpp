@@ -43,7 +43,7 @@ int main(){
             {
                 throw std::invalid_argument("Įvestis nėra sveikasis skaičius. ");
             }
-            if(pasirinkimas < 1 || pasirinkimas > 9) 
+            if(pasirinkimas < 1 || pasirinkimas > 10) 
             {
                 throw std::out_of_range("Pasirinkimas už leistino intervalo (1-7) ribų");
             }

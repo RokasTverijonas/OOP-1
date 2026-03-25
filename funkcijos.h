@@ -133,21 +133,20 @@ void StudentuPadalinimas( konteineris& A, konteineris& vargsai, konteineris& kie
 template<typename konteineris>
 void StudentuPadalinimas2(konteineris& A, konteineris& vargsai)
 {
-    auto it = A.begin();
-
-    while(it != A.end())
+    //remove_if iskelia konteinerio elementus i jo gala, ties kuriais lambda grazina true
+    // it yra iteratorius kuri po remove_if rodo i pirma "netikusi" elementa, kuri reikia pasalinti
+    auto it = remove_if(A.begin(), A.end(), [&vargsai](studentas& a)
     {
-        if(it->galutinisVid < 5.0)
+        if(a.galutinisVid < 5.0)
         {
-            vargsai.push_back(*it);
-            it = A.erase(it);
+            vargsai.push_back(a);
+            return true;
         }
-        else
-        {
-            it++;
-        }
+        return false;
+    });
+    //istrinam pagrindinio konteinerio galo elementus, kurie po remove_if buvo ten sudėti
+    A.erase(it, A.end());
 
-    }
 }
 
 //3 strategija

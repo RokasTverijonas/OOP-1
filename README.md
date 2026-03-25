@@ -1,4 +1,26 @@
-# v1.0 aprašymas
+# Projekto aprašymas
+Programa skirta studentų akademinių pasiekimų informacijos apdorojimui. Vartotojas gali rinktis, ar studentų informaciją įveda jis pats, ar informacija yra generuojama automatiškai. Programoje leidžia generuoti, nuskaityti studentų failus bei atlikti skirtingus programos veikimo laiko testus. Programos veikimo spartos testavimui naudojami skirtingi konteineriai.
+
+# Naudojimosi instrukcija
+1. Nusiklonuokite repozitoriją:
+   
+   ```
+   git clone https://github.com/RokasTverijonas/OOP-1.git
+   ```
+2. Projekto kompiliavimas su CMake
+   
+   ```
+   cd jusu-projektas
+   mkdir build
+   cd build
+   cmake ..
+   make
+   ```
+3. Paleiskite programą
+   
+   ```
+   ./programa1
+   ```
 
 Kompiuterio specifikacijos:
 
