@@ -127,13 +127,42 @@ void StudentuPadalinimas( konteineris& A, konteineris& vargsai, konteineris& kie
             kietekai.push_back(s);
         }
     }
+    A.clear();
 
 }
 //2 strategija
 template<typename konteineris>
 void StudentuPadalinimas2(konteineris& A, konteineris& vargsai)
 {
-    //remove_if iskelia konteinerio elementus i jo gala, ties kuriais lambda grazina true
+    //to do: sort vektoriu, kad butu galima daryt be stl algoritmuir nestrigtu ties vektoriais
+    if constexpr (std::is_same_v<konteineris, std::list<studentas>>)
+    {
+        A.sort([](const studentas& a, const studentas& b){
+            return a.galutinisVid > b.galutinisVid;
+        });
+    }
+    else 
+    {
+        std::sort(A.begin(), A.end(), [](const studentas& a, const studentas& b){
+            return a.galutinisVid > b.galutinisVid;
+        });
+    }
+    auto it = A.end();
+
+    while(it != A.begin())
+    {
+        --it;
+        if(it->galutinisVid < 5)
+        {
+            vargsai.push_back(*it);
+            it = A.erase(it);
+        }
+        else{
+            break;
+        }
+    }
+    
+    /*remove_if iskelia konteinerio elementus i jo gala, ties kuriais lambda grazina true
     // it yra iteratorius kuri po remove_if rodo i pirma "netikusi" elementa, kuri reikia pasalinti
     auto it = remove_if(A.begin(), A.end(), [&vargsai](studentas& a)
     {
@@ -146,6 +175,7 @@ void StudentuPadalinimas2(konteineris& A, konteineris& vargsai)
     });
     //istrinam pagrindinio konteinerio galo elementus, kurie po remove_if buvo ten sudėti
     A.erase(it, A.end());
+    */
 
 }
 
