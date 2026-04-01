@@ -134,7 +134,7 @@ void StudentuPadalinimas( konteineris& A, konteineris& vargsai, konteineris& kie
 template<typename konteineris>
 void StudentuPadalinimas2(konteineris& A, konteineris& vargsai)
 {
-    //to do: sort vektoriu, kad butu galima daryt be stl algoritmuir nestrigtu ties vektoriais
+    
     if constexpr (std::is_same_v<konteineris, std::list<studentas>>)
     {
         A.sort([](const studentas& a, const studentas& b){
